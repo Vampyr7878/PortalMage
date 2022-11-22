@@ -51,8 +51,6 @@ L["Silvermoon"] = true
 L["toggles portal and teleport to Silvermoon"] = true
 L["Stonard"] = true
 L["toggles portal and teleport to Stonard"] = true
-L["Dalaran"] = true
-L["toggles portal and teleport to Dalaran"] = true
 
 -- Portals - neutral city -
 
