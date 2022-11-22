@@ -57,8 +57,6 @@ L["toggles portal and teleport to Stonard"] = "차원문과 순간이동을 스�
 
 L["Shattrath"] = "샤트라스"
 L["toggles portal and teleport to Shattrath"] = "차원문과 순간 이동을 샤트라스 전환."
-L["Dalaran"] = "달라란"
-L["toggles portal and teleport to Dalaran"] = "차원문과 순간 이동을 달라란 전환."
 
 -- tooltip --
 L["Left Click:"] = "좌 클릭:"

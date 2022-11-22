@@ -15,8 +15,7 @@ portalMageSpells = {["stormwind"] = true,
 					["silvermoon"] = true,
 					["theramore"] = true,
 					["stonard"] = true,
-					["shattrath"] = false,
-					["dalaran"] = false}
+					["shattrath"] = false}
 
 PortalMage.portals = {["stormwind"] = 10059,
 					  ["orgrimmar"] = 11417,
@@ -29,8 +28,7 @@ PortalMage.portals = {["stormwind"] = 10059,
 					  ["theramore"] = 49360,
 					  ["stonard"] = 49361,
 					  ["shattrathA"] = 33691,
-					  ["shattrathH"] = 35717,
-					  ["dalaran"] = 53142}
+					  ["shattrathH"] = 35717}
 
 PortalMage.teleports = {["stormwind"] = 3561,
 						["orgrimmar"] = 3567,
@@ -43,8 +41,7 @@ PortalMage.teleports = {["stormwind"] = 3561,
 						["theramore"] = 49359,
 						["stonard"] = 49358,
 						["shattrathA"] = 33690,
-						["shattrathH"] = 35715,
-						["dalaran"] = 53140}
+						["shattrathH"] = 35715}
 
 PortalMage.icons = {["stormwind"] = "Interface/ICONS/Spell_Arcane_TeleportStormwind",
 					["orgrimmar"] = "Interface/ICONS/Spell_Arcane_TeleportOrgrimmar",
@@ -56,8 +53,7 @@ PortalMage.icons = {["stormwind"] = "Interface/ICONS/Spell_Arcane_TeleportStormw
 					["silvermoon"] = "Interface/ICONS/Spell_Arcane_TeleportSilvermoon",
 					["theramore"] = "Interface/ICONS/Spell_Arcane_TeleportTheramore",
 					["stonard"] = "Interface/ICONS/Spell_Arcane_TeleportStonard",
-					["shattrath"] = "Interface/ICONS/Spell_Arcane_TeleportShattrath",
-					["dalaran"] = "Interface/ICONS/Spell_Arcane_TeleportDalaran"}
+					["shattrath"] = "Interface/ICONS/Spell_Arcane_TeleportShattrath"}
 
 function PortalMage:OnInitialize()
 	_, self.class = UnitClass("player")
@@ -262,13 +258,6 @@ function PortalMage:OnInitialize()
 								desc = L["toggles portal and teleport to Shattrath"],
 								set = "Set",
 								get = "Get"
-							},
-							dalaran = {
-								name = L["Dalaran"],
-								type = "toggle",
-								desc = L["toggles portal and teleport to Dalaran"],
-								set = "Set",
-								get = "Get"
 							}
 						}
 					}
@@ -426,13 +415,6 @@ function PortalMage:OnInitialize()
 								name = L["Shattrath"],
 								type = "toggle",
 								desc = L["toggles portal and teleport to Shattrath"],
-								set = "Set",
-								get = "Get"
-							},
-							dalaran = {
-								name = L["Dalaran"],
-								type = "toggle",
-								desc = L["toggles portal and teleport to Dalaran"],
 								set = "Set",
 								get = "Get"
 							}
@@ -615,9 +597,6 @@ function PortalMage:AddMasqueButtons()
 		if portalMageSpells["shattrath"] then
 			group:AddButton(self.button6)
 		end
-		if portalMageSpells["dalaran"] then
-			group:AddButton(self.button7)
-		end
 	else
 		if portalMageSpells["orgrimmar"] then
 			group:AddButton(self.button1)
@@ -637,9 +616,6 @@ function PortalMage:AddMasqueButtons()
 		if portalMageSpells["shattrath"] then
 			group:AddButton(self.button6)
 		end
-		if portalMageSpells["dalaran"] then
-			group:AddButton(self.button7)
-		end
 	end
 end
 
@@ -650,7 +626,6 @@ function PortalMage:RemoveMasqueButtons()
 	group:RemoveButton(self.button4)
 	group:RemoveButton(self.button5)
 	group:RemoveButton(self.button6)
-	group:RemoveButton(self.button7)
 end
 
 function PortalMage.frameOnEvent(self, event, spell)
@@ -803,9 +778,6 @@ function PortalMage:SetupButtonsVertical(frame, move)
 		if portalMageSpells["shattrath"] then
 			self.button6, length = self:SetupButtonVertical("PortalMageButton6", self.button6, length, "shattrathA", 126, frame, PortalMage.icons["shattrath"])
 		end
-		if portalMageSpells["dalaran"] then
-			self.button7, length = self:SetupButtonVertical("PortalMageButton7", self.button7, length, "dalaran", 127, frame, PortalMage.icons["dalaran"])
-		end
 	else
 		if portalMageSpells["orgrimmar"] then
 			self.button1, length = self:SetupButtonVertical("PortalMageButton1", self.button1, length, "orgrimmar", 121, frame, PortalMage.icons["orgrimmar"])
@@ -824,9 +796,6 @@ function PortalMage:SetupButtonsVertical(frame, move)
 		end
 		if portalMageSpells["shattrath"] then
 			self.button6, length = self:SetupButtonVertical("PortalMageButton6", self.button6, length, "shattrathH", 126, frame, PortalMage.icons["shattrath"])
-		end
-		if portalMageSpells["dalaran"] then
-			self.button7, length = self:SetupButtonVertical("PortalMageButton7", self.button7, length, "dalaran", 127, frame, PortalMage.icons["dalaran"])
 		end
 	end
 	frame:SetWidth(40)
@@ -876,9 +845,6 @@ function PortalMage:SetupButtonsHorizontal(frame, move)
 		if portalMageSpells["shattrath"] then
 			self.button6, length = self:SetupButtonHorizontal("PortalMageButton6", self.button6, length, "shattrathA", 126, frame, PortalMage.icons["shattrath"])
 		end
-		if portalMageSpells["dalaran"] then
-			self.button7, length = self:SetupButtonHorizontal("PortalMageButton7", self.button7, length, "dalaran", 127, frame, PortalMage.icons["dalaran"])
-		end
 	else
 		if portalMageSpells["orgrimmar"] then
 			self.button1, length = self:SetupButtonHorizontal("PortalMageButton1", self.button1, length, "orgrimmar", 121, frame, PortalMage.icons["orgrimmar"])
@@ -897,9 +863,6 @@ function PortalMage:SetupButtonsHorizontal(frame, move)
 		end
 		if portalMageSpells["shattrath"] then
 			self.button6, length = self:SetupButtonHorizontal("PortalMageButton6", self.button6, length, "shattrathH", 126, frame, PortalMage.icons["shattrath"])
-		end
-		if portalMageSpells["dalaran"] then
-			self.button7, length = self:SetupButtonHorizontal("PortalMageButton7", self.button7, length, "dalaran", 127, frame, PortalMage.icons["dalaran"])
 		end
 	end
 	frame:SetWidth(length)
@@ -1012,7 +975,6 @@ function PortalMage:ClearButtons()
 	self:ClearButton(self.button4, 124)
 	self:ClearButton(self.button5, 125)
 	self:ClearButton(self.button6, 126)
-	self:ClearButton(self.button7, 127)
 end
 
 function PortalMage:ClearButton(button, id)
