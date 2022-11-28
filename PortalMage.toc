@@ -4,7 +4,7 @@
 ## Notes: Bar with portals and teleports.
 ## Notes-koKR: 포털과 텔레포트가 있는 바.
 ## Author: Vampyr78
-## Version: 2.1-classic
+## Version: 2.1.1-classic
 ## SavedVariablesPerCharacter: portalMageData, portalMageSpells
 ## OptionalDeps: Masque
 embeds.xml

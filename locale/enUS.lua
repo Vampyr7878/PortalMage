@@ -45,5 +45,5 @@ L["Thunder Bluff"] = true
 L["toggles portal and teleport to Thunder Bluff"] = true
 
 -- toltip --
-L["Right Click:"] = true
+L["Left Click:"] = true
 L["Right Click:"] = true
