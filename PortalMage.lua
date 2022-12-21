@@ -136,7 +136,7 @@ function PortalMage:OnInitialize()
 									position = {
 										name = "Position",
 										type = "select",
-										values = {["TOPLEFT"] = "TopLeft", ["BOTTOMLEFT"] = "BottomLeft", ["TOPRIGHT"] = "TopRight", ["BOTTOMRIGHT"] = "Bottom Right"},
+										values = {["TOPLEFT"] = L["Top Left"], ["BOTTOMLEFT"] = L["Bottom Left"], ["TOPRIGHT"] = L["Top Right"], ["BOTTOMRIGHT"] = L["Bottom Right"]},
 										style = "dropdown",
 										set = "SetPortalRunePosition",
 										get = "GetPortalRunePosition"
@@ -157,7 +157,7 @@ function PortalMage:OnInitialize()
 									position = {
 										name = "Position",
 										type = "select",
-										values = {["TOPLEFT"] = "TopLeft", ["BOTTOMLEFT"] = "BottomLeft", ["TOPRIGHT"] = "TopRight", ["BOTTOMRIGHT"] = "Bottom Right"},
+										values = {["TOPLEFT"] = L["Top Left"], ["BOTTOMLEFT"] = L["Bottom Left"], ["TOPRIGHT"] = L["Top Right"], ["BOTTOMRIGHT"] = L["Bottom Right"]},
 										style = "dropdown",
 										set = "SetTeleportRunePosition",
 										get = "GetTeleportRunePosition"
@@ -268,7 +268,7 @@ function PortalMage:OnInitialize()
 									position = {
 										name = "Position",
 										type = "select",
-										values = {["TOPLEFT"] = "TopLeft", ["BOTTOMLEFT"] = "BottomLeft", ["TOPRIGHT"] = "TopRight", ["BOTTOMRIGHT"] = "Bottom Right"},
+										values = {["TOPLEFT"] = L["Top Left"], ["BOTTOMLEFT"] = L["Bottom Left"], ["TOPRIGHT"] = L["Top Right"], ["BOTTOMRIGHT"] = L["Bottom Right"]},
 										style = "dropdown",
 										set = "SetPortalRunePosition",
 										get = "GetPortalRunePosition"
@@ -289,7 +289,7 @@ function PortalMage:OnInitialize()
 									position = {
 										name = "Position",
 										type = "select",
-										values = {["TOPLEFT"] = "TopLeft", ["BOTTOMLEFT"] = "BottomLeft", ["TOPRIGHT"] = "TopRight", ["BOTTOMRIGHT"] = "Bottom Right"},
+										values = {["TOPLEFT"] = L["Top Left"], ["BOTTOMLEFT"] = L["Bottom Left"], ["TOPRIGHT"] = L["Top Right"], ["BOTTOMRIGHT"] = L["Bottom Right"]},
 										style = "dropdown",
 										set = "SetTeleportRunePosition",
 										get = "GetTeleportRunePosition"
