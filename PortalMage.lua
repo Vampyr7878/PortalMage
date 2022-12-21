@@ -162,7 +162,7 @@ function PortalMage:OnInitialize()
 									position = {
 										name = "Position",
 										type = "select",
-										values = {["TOPLEFT"] = "TopLeft", ["BOTTOMLEFT"] = "BottomLeft", ["TOPRIGHT"] = "TopRight", ["BOTTOMRIGHT"] = "Bottom Right"},
+										values = {["TOPLEFT"] = L["Top Left"], ["BOTTOMLEFT"] = L["Bottom Left"], ["TOPRIGHT"] = L["Top Right"], ["BOTTOMRIGHT"] = L["Bottom Right"]},
 										style = "dropdown",
 										set = "SetPortalRunePosition",
 										get = "GetPortalRunePosition"
@@ -183,7 +183,7 @@ function PortalMage:OnInitialize()
 									position = {
 										name = "Position",
 										type = "select",
-										values = {["TOPLEFT"] = "TopLeft", ["BOTTOMLEFT"] = "BottomLeft", ["TOPRIGHT"] = "TopRight", ["BOTTOMRIGHT"] = "Bottom Right"},
+										values = {["TOPLEFT"] = L["Top Left"], ["BOTTOMLEFT"] = L["Bottom Left"], ["TOPRIGHT"] = L["Top Right"], ["BOTTOMRIGHT"] = L["Bottom Right"]},
 										style = "dropdown",
 										set = "SetTeleportRunePosition",
 										get = "GetTeleportRunePosition"
@@ -328,7 +328,7 @@ function PortalMage:OnInitialize()
 									position = {
 										name = "Position",
 										type = "select",
-										values = {["TOPLEFT"] = "TopLeft", ["BOTTOMLEFT"] = "BottomLeft", ["TOPRIGHT"] = "TopRight", ["BOTTOMRIGHT"] = "Bottom Right"},
+										values = {["TOPLEFT"] = L["Top Left"], ["BOTTOMLEFT"] = L["Bottom Left"], ["TOPRIGHT"] = L["Top Right"], ["BOTTOMRIGHT"] = L["Bottom Right"]},
 										style = "dropdown",
 										set = "SetPortalRunePosition",
 										get = "GetPortalRunePosition"
@@ -349,7 +349,7 @@ function PortalMage:OnInitialize()
 									position = {
 										name = "Position",
 										type = "select",
-										values = {["TOPLEFT"] = "TopLeft", ["BOTTOMLEFT"] = "BottomLeft", ["TOPRIGHT"] = "TopRight", ["BOTTOMRIGHT"] = "Bottom Right"},
+										values = {["TOPLEFT"] = L["Top Left"], ["BOTTOMLEFT"] = L["Bottom Left"], ["TOPRIGHT"] = L["Top Right"], ["BOTTOMRIGHT"] = L["Bottom Right"]},
 										style = "dropdown",
 										set = "SetTeleportRunePosition",
 										get = "GetTeleportRunePosition"
@@ -730,18 +730,21 @@ function PortalMage:SetupFrame(frame)
 	frame:RegisterEvent("LEARNED_SPELL_IN_TAB")
 	frame:RegisterEvent("BAG_UPDATE")
 	frame:SetScript("OnEvent", PortalMage.frameOnEvent)
-	frame.teleports = frame:CreateFontString(nil, "HIGH", "GameFontWhite")
+	frame.teleports = frame:CreateFontString(nil, "OVERLAY", "GameFontWhite")
 	frame.teleports:SetTextColor(1, 1, 0)
 	frame.teleports:SetText(teleportRunes)
-	frame.portals = frame:CreateFontString(nil, "HIGH", "GameFontWhite")
+	frame.portals = frame:CreateFontString(nil, "OVERLAY", "GameFontWhite")
 	frame.portals:SetTextColor(0, 1, 0)
 	frame.portals:SetText(portalRunes)
-	if portalMageData.Runes.show then
-		self.frame.portals:Show()
-		self.frame.teleports:Show()
+	if portalMageData.Runes.Portal.show then
+		frame.portals:Show()
 	else
-		self.frame.portals:Hide()
-		self.frame.teleports:Hide()
+		frame.portals:Hide()
+	end
+	if portalMageData.Runes.Teleport.show then
+		frame.teleports:Show()
+	else
+		frame.teleports:Hide()
 	end
 	if portalMageData.Mouseover then
 		frame:SetAlpha(0)
@@ -772,8 +775,8 @@ end
 function PortalMage:CountItems(item)
 	local count = 0
 	for bag = 0 ,NUM_BAG_SLOTS do
-		for slot = 1, GetContainerNumSlots(bag) do
-			if item == GetContainerItemID(bag, slot) then
+		for slot = 1, GetContainerNumSlots(bag) do --C_Container.GetContainerNumSlots(bag)
+			if item == GetContainerItemID(bag, slot) then --C_Container.GetContainerItemID
 				count = count + (select(2, GetContainerItemInfo(bag, slot)))
 			end
 		end
