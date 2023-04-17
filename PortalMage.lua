@@ -164,6 +164,13 @@ function PortalMage:OnInitialize()
 									}
 								}
 							},
+							invert = {
+								name = L["Invert mouse buttons"],
+								type = "toggle",
+								desc = L["when enabled left mouse button will cast teleport spell while right mouse button will cast portal spell"],
+								set = "SetInvert",
+								get = "GetInvert"
+							},
 							opacity = {
 								name = L["Opacity"],
 								order = 1,
