@@ -1,11 +1,12 @@
-## Interface: 100007
+## Interface: 100100
 ## Title: Portal Mage
 ## Title-koKR: 포탈 매직-Portal Mage
 ## Notes: Bar with portals and teleports.
 ## Notes-koKR: 포털과 텔레포트가 있는 바.
 ## Author: Vampyr78
-## Version: 2.2.1
+## Version: 2.3
 ## SavedVariablesPerCharacter: portalMageData, portalMageSpells
+## IconTexture: Interface\Icons\spell_arcane_teleportshattrath.blp
 ## OptionalDeps: Masque
 embeds.xml
 Locale\enUS.lua
