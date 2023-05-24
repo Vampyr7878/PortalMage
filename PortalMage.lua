@@ -706,16 +706,20 @@ function PortalMage:SetupButtonsVertical(frame, move)
 	frame.portals:ClearAllPoints()
 	frame.teleports:ClearAllPoints()
 	local offset = 15
-	if portalRunes > 9 then
-		offset = offset + 5
+	if portalRunes > 99 then
+		offset = offset + 17
+	elseif portalRunes > 9 then
+		offset = offset + 7
 	end
 	if string.find(portalMageData.Runes.Portal.position, "LEFT") then
 		offset = -offset
 	end
 	frame.portals:SetPoint(portalMageData.Runes.Portal.position, offset, 0)
 	offset = 15
-	if teleportRunes > 9 then
-		offset = offset + 5
+	if teleportRunes > 99 then
+		offset = offset + 17
+	elseif teleportRunes > 9 then
+		offset = offset + 7
 	end
 	if string.find(portalMageData.Runes.Teleport.position, "LEFT") then
 		offset = -offset
@@ -755,16 +759,20 @@ function PortalMage:SetupButtonsHorizontal(frame, move)
 	frame.portals:ClearAllPoints()
 	frame.teleports:ClearAllPoints()
 	local offset = 15
-	if portalRunes > 9 then
-		offset = offset + 5
+	if portalRunes > 99 then
+		offset = offset + 14
+	elseif portalRunes > 9 then
+		offset = offset + 7
 	end
 	if string.find(portalMageData.Runes.Portal.position, "LEFT") then
 		offset = -offset
 	end
 	frame.portals:SetPoint(portalMageData.Runes.Portal.position, offset, 0)
 	offset = 15
-	if teleportRunes > 9 then
-		offset = offset + 5
+	if teleportRunes > 99 then
+		offset = offset + 14
+	elseif teleportRunes > 9 then
+		offset = offset + 7
 	end
 	if string.find(portalMageData.Runes.Teleport.position, "LEFT") then
 		offset = -offset
