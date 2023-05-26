@@ -576,6 +576,7 @@ function PortalMage.frameOnEvent(self, event, spell)
 		portalRunes = PortalMage:CountItems(17032)
 		self.teleports:SetText(teleportRunes)
 		self.portals:SetText(portalRunes)
+		AdjustReagentDisplay(self)
 	end
 end
 
@@ -705,26 +706,7 @@ function PortalMage:SetupButtonsVertical(frame, move)
 	move:SetHeight(-length)
 	frame.portals:ClearAllPoints()
 	frame.teleports:ClearAllPoints()
-	local offset = 15
-	if portalRunes > 99 then
-		offset = offset + 17
-	elseif portalRunes > 9 then
-		offset = offset + 7
-	end
-	if string.find(portalMageData.Runes.Portal.position, "LEFT") then
-		offset = -offset
-	end
-	frame.portals:SetPoint(portalMageData.Runes.Portal.position, offset, 0)
-	offset = 15
-	if teleportRunes > 99 then
-		offset = offset + 17
-	elseif teleportRunes > 9 then
-		offset = offset + 7
-	end
-	if string.find(portalMageData.Runes.Teleport.position, "LEFT") then
-		offset = -offset
-	end
-	frame.teleports:SetPoint(portalMageData.Runes.Teleport.position, offset, 0)
+	AdjustReagentDisplay(frame)
 	collectgarbage("collect")
 end
 
@@ -758,9 +740,14 @@ function PortalMage:SetupButtonsHorizontal(frame, move)
 	move:SetHeight(40)
 	frame.portals:ClearAllPoints()
 	frame.teleports:ClearAllPoints()
+	AdjustReagentDisplay(frame)
+	collectgarbage("collect")
+end
+
+function AdjustReagentDisplay(frame)
 	local offset = 15
 	if portalRunes > 99 then
-		offset = offset + 14
+		offset = offset + 17
 	elseif portalRunes > 9 then
 		offset = offset + 7
 	end
@@ -770,7 +757,7 @@ function PortalMage:SetupButtonsHorizontal(frame, move)
 	frame.portals:SetPoint(portalMageData.Runes.Portal.position, offset, 0)
 	offset = 15
 	if teleportRunes > 99 then
-		offset = offset + 14
+		offset = offset + 17
 	elseif teleportRunes > 9 then
 		offset = offset + 7
 	end
@@ -778,7 +765,6 @@ function PortalMage:SetupButtonsHorizontal(frame, move)
 		offset = -offset
 	end
 	frame.teleports:SetPoint(portalMageData.Runes.Teleport.position, offset, 0)
-	collectgarbage("collect")
 end
 
 function PortalMage.buttonOnUpdate(self)
