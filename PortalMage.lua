@@ -704,8 +704,6 @@ function PortalMage:SetupButtonsVertical(frame, move)
 	move:SetWidth(40)
 	frame:SetHeight(-length)
 	move:SetHeight(-length)
-	frame.portals:ClearAllPoints()
-	frame.teleports:ClearAllPoints()
 	AdjustReagentDisplay(frame)
 	collectgarbage("collect")
 end
@@ -738,13 +736,13 @@ function PortalMage:SetupButtonsHorizontal(frame, move)
 	move:SetWidth(length)
 	frame:SetHeight(40)
 	move:SetHeight(40)
-	frame.portals:ClearAllPoints()
-	frame.teleports:ClearAllPoints()
 	AdjustReagentDisplay(frame)
 	collectgarbage("collect")
 end
 
 function AdjustReagentDisplay(frame)
+	frame.portals:ClearAllPoints()
+	frame.teleports:ClearAllPoints()
 	local offset = 15
 	if portalRunes > 99 then
 		offset = offset + 17
