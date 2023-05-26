@@ -908,7 +908,7 @@ function PortalMage:SetupButtonsHorizontal(frame, move)
 	collectgarbage("collect")
 end
 
-function AdjustReagentDisplay()
+function AdjustReagentDisplay(frame)
 	frame.portals:ClearAllPoints()
 	frame.teleports:ClearAllPoints()
 	local offset = 15
