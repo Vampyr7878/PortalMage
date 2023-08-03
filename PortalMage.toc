@@ -1,4 +1,4 @@
-## Interface: 30401
+## Interface: 30402
 ## Title: Portal Mage
 ## Title-koKR: 포탈 매직-Portal Mage
 ## Notes: Bar with portals and teleports.
