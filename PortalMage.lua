@@ -622,10 +622,10 @@ function PortalMage:SetupFrame(frame)
 	frame:RegisterEvent("LEARNED_SPELL_IN_TAB")
 	frame:RegisterEvent("BAG_UPDATE")
 	frame:SetScript("OnEvent", PortalMage.frameOnEvent)
-	frame.teleports = frame:CreateFontString(nil, "HIGH", "GameFontWhite")
+	frame.teleports = frame:CreateFontString(nil, "OVERLAY", "GameFontWhite")
 	frame.teleports:SetTextColor(1, 1, 0)
 	frame.teleports:SetText(teleportRunes)
-	frame.portals = frame:CreateFontString(nil, "HIGH", "GameFontWhite")
+	frame.portals = frame:CreateFontString(nil, "OVERLAY", "GameFontWhite")
 	frame.portals:SetTextColor(0, 1, 0)
 	frame.portals:SetText(portalRunes)
 	if portalMageData.Runes.Portal.show then
@@ -667,9 +667,12 @@ end
 function PortalMage:CountItems(item)
 	local count = 0
 	for bag = 0 ,NUM_BAG_SLOTS do
-		for slot = 1, GetContainerNumSlots(bag) do
-			if item == GetContainerItemID(bag, slot) then
-				count = count + (select(2, GetContainerItemInfo(bag, slot)))
+		for slot = 1, C_Container.GetContainerNumSlots(bag) do
+			if item == C_Container.GetContainerItemID(bag, slot) then
+				local info = C_Container.GetContainerItemInfo(bag, slot)
+				if info then
+					count = count + info.stackCount
+				end
 			end
 		end
 	end
