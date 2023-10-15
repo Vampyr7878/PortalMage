@@ -1085,7 +1085,7 @@ function PortalMage:SetupButton(button, index, id, icon)
 		button:SetScript("OnEnter", function(self) 
 						PortalMage.frame:SetAlpha(1)
 						GameTooltip_SetDefaultAnchor(GameTooltip, UIParent)
-						PortalMage:SetTooltipText(L["Right Click:"], L["Left Click:"], self:GetAttribute("spell2"), self:GetAttribute("spell1"))
+						PortalMage:SetTooltipText(L["Left Click:"], L["Right Click:"], self:GetAttribute("spell1"), self:GetAttribute("spell2"))
 						GameTooltip:Show()
 						end)
 	else
