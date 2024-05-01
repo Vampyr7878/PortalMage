@@ -58,6 +58,8 @@ L["Shattrath"] = true
 L["toggles portal and teleport to Shattrath"] = true
 L["Dalaran"] = true
 L["toggles portal and teleport to Dalaran"] = true
+L["Tol Barad"] = true
+L["toggles portal and teleport to Tol Barad"] = true
 
 -- toltip --
 L["Left Click:"] = true
