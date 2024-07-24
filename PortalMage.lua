@@ -199,6 +199,7 @@ function PortalMage:OnInitialize()
 							mouseover = {
 								name = L["Show only on mouse over"],
 								type = "toggle",
+								width = "full",
 								desc = L["when enabled bar will only be visible when you mouse over it"],
 								set = "SetMouseover",
 								get = "GetMouseover"
@@ -385,6 +386,7 @@ function PortalMage:OnInitialize()
 							mouseover = {
 								name = L["Show only on mouse over"],
 								type = "toggle",
+								width = "full",
 								desc = L["when enabled bar will only be visible when you mouse over it"],
 								set = "SetMouseover",
 								get = "GetMouseover"
