@@ -14,18 +14,19 @@ portalMageSpells = {["stormwind"] = true,
 					["theramore"] = true,
 					["stonard"] = true,
 					["dalaran"] = true,
-					["shattrath"] = false,
-					["northrend"] = false,
-					["tolbarad"] = false,
-					["pandaria"] = false,
-					["stormshield"] = false,
-					["warspear"] = false,
-					["brokenisles"] = false,
-					["orderhall"] = false,
-					["boralus"] = false,
-					["dazaralor"] = false,
-					["oribos"] = false,
-					["valdrakken"] = false}
+					["shattrath"] = true,
+					["northrend"] = true,
+					["tolbarad"] = true,
+					["pandaria"] = true,
+					["stormshield"] = true,
+					["warspear"] = true,
+					["brokenisles"] = true,
+					["orderhall"] = true,
+					["boralus"] = true,
+					["dazaralor"] = true,
+					["oribos"] = true,
+					["valdrakken"] = true,
+					["dornogal"] = true}
 
 PortalMage.portals = {["stormwind"] = 10059,
 					  ["orgrimmar"] = 11417,
@@ -52,7 +53,8 @@ PortalMage.portals = {["stormwind"] = 10059,
 					  ["boralus"] = 281400,
 					  ["dazaralor"] = 281402,
 					  ["oribos"] = 344597,
-					  ["valdrakken"] = 395289}
+					  ["valdrakken"] = 395289,
+					  ["dornogal"] = 446534}
 
 PortalMage.teleports = {["stormwind"] = 3561,
 						["orgrimmar"] = 3567,
@@ -79,7 +81,8 @@ PortalMage.teleports = {["stormwind"] = 3561,
 					    ["boralus"] = 281403,
 					    ["dazaralor"] = 281404,
 						["oribos"] = 344587,
-						["valdrakken"] = 395277}
+						["valdrakken"] = 395277,
+						["dornogal"] = 446540}
 
 PortalMage.icons = {["stormwind"] = "Interface/ICONS/Spell_Arcane_TeleportStormwind",
 					["orgrimmar"] = "Interface/ICONS/Spell_Arcane_TeleportOrgrimmar",
@@ -103,7 +106,8 @@ PortalMage.icons = {["stormwind"] = "Interface/ICONS/Spell_Arcane_TeleportStormw
 					["boralus"] = "Interface/ICONS/Spell_Arcane_PortalKulTiras",
 					["dazaralor"] = "Interface/ICONS/Spell_Arcane_PortalZandalar",
 					["oribos"] = "Interface/ICONS/Spell_Arcane_TeleportOribos",
-					["valdrakken"] = "Interface/ICONS/Spell_Arcane_TeleportValdrakken"}
+					["valdrakken"] = "Interface/ICONS/Spell_Arcane_TeleportValdrakken",
+					["dornogal"] = "Interface/ICONS/Inv_Spell_Arcane_TelepotDornogal"}
 
 function PortalMage:OnInitialize()
 	_, self.class = UnitClass("player")
@@ -321,6 +325,13 @@ function PortalMage:OnInitialize()
 								desc = L["toggles portal and teleport to Valdrakken"],
 								set = "Set",
 								get = "Get"
+							},
+							dornogal = {
+								name = L["Dornogal"],
+								type = "toggle",
+								desc = L["toggles portal and teleport to Dornogal"],
+								set = "Set",
+								get = "Get"
 							}
 						}
 					}
@@ -506,6 +517,13 @@ function PortalMage:OnInitialize()
 								name = L["Valdrakken"],
 								type = "toggle",
 								desc = L["toggles portal and teleport to Valdrakken"],
+								set = "Set",
+								get = "Get"
+							},
+							dornogal = {
+								name = L["Dornogal"],
+								type = "toggle",
+								desc = L["toggles portal and teleport to Dornogal"],
 								set = "Set",
 								get = "Get"
 							}
@@ -715,6 +733,9 @@ function PortalMage:AddMasqueButtons()
 		if portalMageSpells["valdrakken"] then
 			group:AddButton(self.button16)
 		end
+		if portalMageSpells["dornogal"] then
+			group:AddButton(self.button17)
+		end
 	end
 end
 
@@ -735,6 +756,7 @@ function PortalMage:RemoveMasqueButtons()
 	group:RemoveButton(self.button14)
 	group:RemoveButton(self.button15)
 	group:RemoveButton(self.button16)
+	group:RemoveButton(self.button17)
 end
 
 function PortalMage.frameOnEvent(self, event, spell)
@@ -779,7 +801,7 @@ end
 
 function PortalMage:NewSpell(id)
 	if self:SpellOnList(id) then
-		for i = 201,216,1 do
+		for i = 201,217,1 do
 			_, spell = GetActionInfo(i)
 			if spell == id then
 				return false
@@ -886,6 +908,9 @@ function PortalMage:SetupButtonsVertical(frame, move)
 		if portalMageSpells["valdrakken"] then
 			self.button16, length = self:SetupButtonVertical("PortalMageButton16", self.button16, length, "valdrakken", 216, frame, PortalMage.icons["valdrakken"])
 		end
+		if portalMageSpells["dornogal"] then
+			self.button16, length = self:SetupButtonVertical("PortalMageButton17", self.button17, length, "dornogal", 217, frame, PortalMage.icons["dornogal"])
+		end
 	else
 		if portalMageSpells["orgrimmar"] then
 			self.button1, length = self:SetupButtonVertical("PortalMageButton1", self.button1, length, "orgrimmar", 201, frame, PortalMage.icons["orgrimmar"])
@@ -934,6 +959,9 @@ function PortalMage:SetupButtonsVertical(frame, move)
 		end
 		if portalMageSpells["valdrakken"] then
 			self.button16, length = self:SetupButtonVertical("PortalMageButton16", self.button16, length, "valdrakken", 216, frame, PortalMage.icons["valdrakken"])
+		end
+		if portalMageSpells["dornogal"] then
+			self.button16, length = self:SetupButtonVertical("PortalMageButton17", self.button17, length, "dornogal", 217, frame, PortalMage.icons["dornogal"])
 		end
 	end
 	frame:SetWidth(44)
@@ -995,6 +1023,9 @@ function PortalMage:SetupButtonsHorizontal(frame, move)
 		if portalMageSpells["valdrakken"] then
 			self.button16, length = self:SetupButtonHorizontal("PortalMageButton16", self.button16, length, "valdrakken", 216, frame, PortalMage.icons["valdrakken"])
 		end
+		if portalMageSpells["dornogal"] then
+			self.button16, length = self:SetupButtonHorizontal("PortalMageButton17", self.button17, length, "dornogal", 217, frame, PortalMage.icons["dornogal"])
+		end
 	else
 		if portalMageSpells["orgrimmar"] then
 			self.button1, length = self:SetupButtonHorizontal("PortalMageButton1", self.button1, length, "orgrimmar", 201, frame, PortalMage.icons["orgrimmar"])
@@ -1043,6 +1074,9 @@ function PortalMage:SetupButtonsHorizontal(frame, move)
 		end
 		if portalMageSpells["valdrakken"] then
 			self.button16, length = self:SetupButtonHorizontal("PortalMageButton16", self.button16, length, "valdrakken", 216, frame, PortalMage.icons["valdrakken"])
+		end
+		if portalMageSpells["dornogal"] then
+			self.button16, length = self:SetupButtonHorizontal("PortalMageButton17", self.button17, length, "dornogal", 217, frame, PortalMage.icons["dornogal"])
 		end
 	end
 	frame:SetWidth(length)
@@ -1178,6 +1212,7 @@ function PortalMage:ClearButtons()
 	self:ClearButton(self.button14, 214)
 	self:ClearButton(self.button15, 215)
 	self:ClearButton(self.button16, 216)
+	self:ClearButton(self.button16, 217)
 end
 
 function PortalMage:ClearButton(button, id)

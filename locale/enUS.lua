@@ -51,7 +51,6 @@ L["Dazar'alor"] = true
 L["toggles portal and teleport to Dazar'alor"] = true
 
 -- Portals - neutral city -
-
 L["Shattrath"] = true
 L["toggles portal and teleport to Shattrath"] = true
 L["Dalaran Crater"] = true
@@ -70,6 +69,8 @@ L["Oribos"] = true
 L["toggles portal and teleport to Oribos"] = true
 L["Valdrakken"] = true
 L["toggles portal and teleport to Valdrakken"] = true
+L["Dornogal"] = true
+L["toggles portal and teleport to Dornogal"] = true
 
 -- toltip --
 L["Left Click:"] = true

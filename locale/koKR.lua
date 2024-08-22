@@ -52,7 +52,6 @@ L["Dazar'alor"] = "다자알로"
 L["toggles portal and teleport to Dazar'alor"] = "차원문과 순간이동을 다자알로 전환."
 
 -- Portals - neutral city -
-
 L["Shattrath"] = "샤트라스"
 L["toggles portal and teleport to Shattrath"] = "차원문과 순간 이동을 샤트라스 전환."
 L["Dalaran Crater"] = "달라란 분화구"
@@ -71,6 +70,8 @@ L["Oribos"] = "오리보스"
 L["toggles portal and teleport to Oribos"] = "차원문과 순간이동을 오리보스 전환."
 L["Valdrakken"] = "발드라켄"
 L["toggles portal and teleport to Valdrakken"] = "차원문과 순간이동을 발드라켄 전환."
+L["Dornogal"] = "도르노갈"
+L["toggles portal and teleport to Dornogal"] = "차원문과 순간이동을 도르노갈 전환."
 
 -- tooltip --
 L["Left Click:"] = "좌 클릭:"
