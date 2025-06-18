@@ -18,6 +18,15 @@ L["change bar opacity"] = "바 불투명도 변경"
 L["Show only on mouse over"] = "마우스 오버"
 L["when enabled bar will only be visible when you mouse over it"] = "막대 위에 마우스 오버로만 표시됩니다."
 L["Portals"] = "차원문 설정"
+L["Announcement"] = true
+L["Announce portal"] = true
+L["when enabled you will announce portal on Say channel"] = true
+L["Portal announcement"] = true
+L["put your announcement for portal here, use %s as placeholder for spell name"] = true
+L["Announce teleport"] = true
+L["when enabled you will announce teleport on Say channel"] = true
+L["Teleport announcement"] = true
+L["put your announcement for tortal here, use %s as placeholder for spell name"] = true
 
 -- Portals - Alliance -
 L["Stormwind"] = "스톰윈드"
