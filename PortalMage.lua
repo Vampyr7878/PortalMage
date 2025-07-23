@@ -2,8 +2,7 @@ local PortalMage = LibStub("AceAddon-3.0"):NewAddon("PortalMage")
 local L = LibStub("AceLocale-3.0"):GetLocale("PortalMage")
 local group = {}
 local Masque
-local teleportRunes
-local portalRunes
+local start = 120
 
 portalMageSpells = {["stormwind"] = true,
 					["orgrimmar"] = true,
@@ -17,7 +16,8 @@ portalMageSpells = {["stormwind"] = true,
 					["stonard"] = true,
 					["shattrath"] = true,
 					["dalaran"] = true,
-					["tolbarad"] = true}
+					["tolbarad"] = true,
+					["pandaria"] = true}
 
 PortalMage.portals = {["stormwind"] = 10059,
 					  ["orgrimmar"] = 11417,
@@ -33,7 +33,9 @@ PortalMage.portals = {["stormwind"] = 10059,
 					  ["shattrathH"] = 35717,
 					  ["dalaran"] = 53142,
 					  ["tolbaradA"] = 88345,
-					  ["tolbaradH"] = 88346}
+					  ["tolbaradH"] = 88346,
+					  ["pandariaA"] = 132620,
+					  ["pandariaH"] = 132626}
 
 PortalMage.teleports = {["stormwind"] = 3561,
 						["orgrimmar"] = 3567,
@@ -49,7 +51,9 @@ PortalMage.teleports = {["stormwind"] = 3561,
 						["shattrathH"] = 35715,
 						["dalaran"] = 53140,
 						["tolbaradA"] = 88342,
-						["tolbaradH"] = 88344}
+						["tolbaradH"] = 88344,
+						["pandariaA"] = 132621,
+						["pandariaH"] = 132627}
 
 PortalMage.icons = {["stormwind"] = "Interface/ICONS/Spell_Arcane_TeleportStormwind",
 					["orgrimmar"] = "Interface/ICONS/Spell_Arcane_TeleportOrgrimmar",
@@ -63,7 +67,8 @@ PortalMage.icons = {["stormwind"] = "Interface/ICONS/Spell_Arcane_TeleportStormw
 					["stonard"] = "Interface/ICONS/Spell_Arcane_TeleportStonard",
 					["shattrath"] = "Interface/ICONS/Spell_Arcane_TeleportShattrath",
 					["dalaran"] = "Interface/ICONS/Spell_Arcane_TeleportDalaran",
-					["tolbarad"] = "Interface/ICONS/Spell_Arcane_TeleportTolBarad",}
+					["tolbarad"] = "Interface/ICONS/Spell_Arcane_TeleportTolBarad",
+					["pandaria"] = "Interface/ICONS/Spell_Arcane_ValeOfBlossoms"}
 
 function PortalMage:OnInitialize()
 	_, self.class = UnitClass("player")
@@ -79,29 +84,16 @@ function PortalMage:OnInitialize()
 			portalMageData = {}
 		end
 		if not portalMageData.X then
-			portalMageData.X = 300
+			portalMageData.X = start + 100
 		end
 		if not portalMageData.Y then
-			portalMageData.Y = 300
+			portalMageData.Y = start + 100
 		end
 		if portalMageData.Vertical == nil then
 			portalMageData.Vertical = false
 		end
 		if portalMageData.Scale == nil then
 			portalMageData.Scale = 1
-		end
-		if portalMageData.Runes == nil then
-			portalMageData.Runes = {}
-		end
-		if portalMageData.Runes.Portal == nil then
-			portalMageData.Runes.Portal = {}
-			portalMageData.Runes.Portal.show = true
-			portalMageData.Runes.Portal.position = "TOPLEFT"
-		end
-		if portalMageData.Runes.Teleport == nil then
-			portalMageData.Runes.Teleport = {}
-			portalMageData.Runes.Teleport.show = true
-			portalMageData.Runes.Teleport.position = "TOPRIGHT"
 		end
 		if portalMageData.Invert == nil then
 			portalMageData.Invert = false
@@ -112,8 +104,18 @@ function PortalMage:OnInitialize()
 		if portalMageData.Mouseover == nil then
 			portalMageData.Mouseover = false
 		end
-		teleportRunes = self:CountItems(17031)
-		portalRunes = self:CountItems(17032)
+		if portalMageData.AnnouncePortal == nil then
+			portalMageData.AnnouncePortal = false
+		end
+		if portalMageData.PortalAnnouncement == nil then
+			portalMageData.PortalAnnouncement = "Casting %s!"
+		end
+		if portalMageData.AnnounceTeleport == nil then
+			portalMageData.AnnounceTeleport = false
+		end
+		if portalMageData.TeleportAnnouncement == nil then
+			portalMageData.TeleportAnnouncement = "Casting %s!"
+		end
 		self:SetupFrame(self.frame)
 		self:SetupMoveFrame(self.move)
 		if self.faction == "Alliance" then
@@ -154,48 +156,6 @@ function PortalMage:OnInitialize()
 								set = "SetScale",
 								get = "GetScale"
 							},
-							portalRune = {
-								name = "Rune of Portals",
-								type = "group",
-								args ={
-									enable = {
-										name = "Enable",
-										type = "toggle",
-										desc = "enable Rune of Portals display near the bar",
-										set = "SetPortalRuneEnable",
-										get = "GetPortalRuneEnable"
-									},
-									position = {
-										name = "Position",
-										type = "select",
-										values = {["TOPLEFT"] = L["Top Left"], ["BOTTOMLEFT"] = L["Bottom Left"], ["TOPRIGHT"] = L["Top Right"], ["BOTTOMRIGHT"] = L["Bottom Right"]},
-										style = "dropdown",
-										set = "SetPortalRunePosition",
-										get = "GetPortalRunePosition"
-									}
-								}
-							},
-							teleportRune = {
-								name = "Rune of Teleportaion",
-								type = "group",
-								args ={
-									enable = {
-										name = "Enable",
-										type = "toggle",
-										desc = "enable Rune of Teleportaion display near the bar",
-										set = "SetTeleportRuneEnable",
-										get = "GetTeleportRuneEnable"
-									},
-									position = {
-										name = "Position",
-										type = "select",
-										values = {["TOPLEFT"] = L["Top Left"], ["BOTTOMLEFT"] = L["Bottom Left"], ["TOPRIGHT"] = L["Top Right"], ["BOTTOMRIGHT"] = L["Bottom Right"]},
-										style = "dropdown",
-										set = "SetTeleportRunePosition",
-										get = "GetTeleportRunePosition"
-									}
-								}
-							},
 							invert = {
 								name = L["Invert mouse buttons"],
 								type = "toggle",
@@ -220,6 +180,42 @@ function PortalMage:OnInitialize()
 								desc = L["when enabled bar will only be visible when you mouse over it"],
 								set = "SetMouseover",
 								get = "GetMouseover"
+							}
+						}
+					},
+					announcement = {
+						name = L["Announcement"],
+						type = "group",
+						args = {
+							announcePortal = {
+								name = L["Announce portal"],
+								type = "toggle",
+								desc = L["when enabled you will announce portal on Say channel"],
+								set = "SetAnnouncePortal",
+								get = "GetAnnouncePortal"
+							},
+							portalAnnouncement ={
+								name = L["Portal announcement"],
+								type = "input",
+								width = "full",
+								desc = L["put your announcement for portal here, use %s as placeholder for spell name"],
+								set = "SetPortalAnnouncement",
+								get = "GetPortalAnnouncement"
+							},
+							announceTeleport = {
+								name = L["Announce teleport"],
+								type = "toggle",
+								desc = L["when enabled you will announce teleport on Say channel"],
+								set = "SetAnnounceTeleport",
+								get = "GetAnnounceTeleport"
+							},
+							teleportAnnouncement ={
+								name = L["Teleport announcement"],
+								type = "input",
+								width = "full",
+								desc = L["put your announcement for tortal here, use %s as placeholder for spell name"],
+								set = "SetTeleportAnnouncement",
+								get = "GetTeleportAnnouncement"
 							}
 						}
 					},
@@ -282,6 +278,13 @@ function PortalMage:OnInitialize()
 								desc = L["toggles portal and teleport to Tol Barad"],
 								set = "Set",
 								get = "Get"
+							},
+							pandaria = {
+								name = L["Vale of Eternal Blossoms"],
+								type = "toggle",
+								desc = L["toggles portal and teleport to Vale of Eternal Blossoms"],
+								set = "Set",
+								get = "Get"
 							}
 						}
 					}
@@ -327,48 +330,6 @@ function PortalMage:OnInitialize()
 								set = "SetScale",
 								get = "GetScale"
 							},
-							portalRune = {
-								name = "Rune of Portals",
-								type = "group",
-								args ={
-									enable = {
-										name = "Enable",
-										type = "toggle",
-										desc = "enable Rune of Portals display near the bar",
-										set = "SetPortalRuneEnable",
-										get = "GetPortalRuneEnable"
-									},
-									position = {
-										name = "Position",
-										type = "select",
-										values = {["TOPLEFT"] = L["Top Left"], ["BOTTOMLEFT"] = L["Bottom Left"], ["TOPRIGHT"] = L["Top Right"], ["BOTTOMRIGHT"] = L["Bottom Right"]},
-										style = "dropdown",
-										set = "SetPortalRunePosition",
-										get = "GetPortalRunePosition"
-									}
-								}
-							},
-							teleportRune = {
-								name = "Rune of Teleportaion",
-								type = "group",
-								args ={
-									enable = {
-										name = "Enable",
-										type = "toggle",
-										desc = "enable Rune of Teleportaion display near the bar",
-										set = "SetTeleportRuneEnable",
-										get = "GetTeleportRuneEnable"
-									},
-									position = {
-										name = "Position",
-										type = "select",
-										values = {["TOPLEFT"] = L["Top Left"], ["BOTTOMLEFT"] = L["Bottom Left"], ["TOPRIGHT"] = L["Top Right"], ["BOTTOMRIGHT"] = L["Bottom Right"]},
-										style = "dropdown",
-										set = "SetTeleportRunePosition",
-										get = "GetTeleportRunePosition"
-									}
-								}
-							},
 							invert = {
 								name = L["Invert mouse buttons"],
 								type = "toggle",
@@ -393,6 +354,42 @@ function PortalMage:OnInitialize()
 								desc = L["when enabled bar will only be visible when you mouse over it"],
 								set = "SetMouseover",
 								get = "GetMouseover"
+							}
+						}
+					},
+					announcement = {
+						name = L["Announcement"],
+						type = "group",
+						args = {
+							announcePortal = {
+								name = L["Announce portal"],
+								type = "toggle",
+								desc = L["when enabled you will announce portal on Say channel"],
+								set = "SetAnnouncePortal",
+								get = "GetAnnouncePortal"
+							},
+							portalAnnouncement ={
+								name = L["Portal announcement"],
+								type = "input",
+								width = "full",
+								desc = L["put your announcement for portal here, use %s as placeholder for spell name"],
+								set = "SetPortalAnnouncement",
+								get = "GetPortalAnnouncement"
+							},
+							announceTeleport = {
+								name = L["Announce teleport"],
+								type = "toggle",
+								desc = L["when enabled you will announce teleport on Say channel"],
+								set = "SetAnnounceTeleport",
+								get = "GetAnnounceTeleport"
+							},
+							teleportAnnouncement ={
+								name = L["Teleport announcement"],
+								type = "input",
+								width = "full",
+								desc = L["put your announcement for tortal here, use %s as placeholder for spell name"],
+								set = "SetTeleportAnnouncement",
+								get = "GetTeleportAnnouncement"
 							}
 						}
 					},
@@ -455,6 +452,13 @@ function PortalMage:OnInitialize()
 								desc = L["toggles portal and teleport to Tol Barad"],
 								set = "Set",
 								get = "Get"
+							},
+							pandaria = {
+								name = L["Vale of Eternal Blossoms"],
+								type = "toggle",
+								desc = L["toggles portal and teleport to Vale of Eternal Blossoms"],
+								set = "Set",
+								get = "Get"
 							}
 						}
 					}
@@ -506,58 +510,6 @@ function PortalMage:GetScale(info)
 	return portalMageData.Scale
 end
 
-function PortalMage:SetPortalRuneEnable(info, val)
-	portalMageData.Runes.Portal.show = val
-	if portalMageData.Runes.Portal.show then
-		self.frame.portals:Show()
-	else
-		self.frame.portals:Hide()
-	end
-end
-
-function PortalMage:GetPortalRuneEnable(info)
-	return portalMageData.Runes.Portal.show
-end
-
-function PortalMage:SetPortalRunePosition(info, val)
-	portalMageData.Runes.Portal.position = val
-	if portalMageData.Vertical then
-		self:SetupButtonsVertical(self.frame, self.move)
-	else
-		self:SetupButtonsHorizontal(self.frame, self.move)
-	end
-end
-
-function PortalMage:GetPortalRunePosition(info)
-	return portalMageData.Runes.Portal.position
-end
-
-function PortalMage:SetTeleportRuneEnable(info, val)
-	portalMageData.Runes.Teleport.show = val
-	if portalMageData.Runes.Teleport.show then
-		self.frame.teleports:Show()
-	else
-		self.frame.teleports:Hide()
-	end
-end
-
-function PortalMage:GetTeleportRuneEnable(info)
-	return portalMageData.Runes.Teleport.show
-end
-
-function PortalMage:SetTeleportRunePosition(info, val)
-	portalMageData.Runes.Teleport.position = val
-	if portalMageData.Vertical then
-		self:SetupButtonsVertical(self.frame, self.move)
-	else
-		self:SetupButtonsHorizontal(self.frame, self.move)
-	end
-end
-
-function PortalMage:GetTeleportRunePosition(info)
-	return portalMageData.Runes.Teleport.position
-end
-
 function PortalMage:SetInvert(info, val)
 	portalMageData.Invert = val
 	if portalMageData.Vertical then
@@ -595,6 +547,38 @@ end
 
 function PortalMage:GetMouseover(info)
 	return portalMageData.Mouseover
+end
+
+function PortalMage:SetAnnouncePortal(info, val)
+	portalMageData.AnnouncePortal = val
+end
+
+function PortalMage:GetAnnouncePortal(info)
+	return portalMageData.AnnouncePortal
+end
+
+function PortalMage:SetPortalAnnouncement(info, val)
+	portalMageData.PortalAnnouncement = val
+end
+
+function PortalMage:GetPortalAnnouncement(info)
+	return portalMageData.PortalAnnouncement
+end
+
+function PortalMage:SetAnnounceTeleport(info, val)
+	portalMageData.AnnounceTeleport = val
+end
+
+function PortalMage:GetAnnounceTeleport(info)
+	return portalMageData.AnnounceTeleport
+end
+
+function PortalMage:SetTeleportAnnouncement(info, val)
+	portalMageData.TeleportAnnouncement = val
+end
+
+function PortalMage:GetTeleportAnnouncement(info)
+	return portalMageData.TeleportAnnouncement
 end
 
 function PortalMage:Set(info, val)
@@ -641,6 +625,9 @@ function PortalMage:AddMasqueButtons()
 		if portalMageSpells["tolbarad"] then
 			group:AddButton(self.button8)
 		end
+		if portalMageSpells["pandaria"] then
+			group:AddButton(self.button9)
+		end
 	else
 		if portalMageSpells["orgrimmar"] then
 			group:AddButton(self.button1)
@@ -666,6 +653,9 @@ function PortalMage:AddMasqueButtons()
 		if portalMageSpells["tolbarad"] then
 			group:AddButton(self.button8)
 		end
+		if portalMageSpells["pandaria"] then
+			group:AddButton(self.button9)
+		end
 	end
 end
 
@@ -678,6 +668,7 @@ function PortalMage:RemoveMasqueButtons()
 	group:RemoveButton(self.button6)
 	group:RemoveButton(self.button7)
 	group:RemoveButton(self.button8)
+	group:RemoveButton(self.button9)
 end
 
 function PortalMage.frameOnEvent(self, event, spell)
@@ -707,12 +698,16 @@ function PortalMage.frameOnEvent(self, event, spell)
 			PortalMage:AddMasqueButtons()
 			group:ReSkin()
 		end
-	elseif event == "BAG_UPDATE" then
-		teleportRunes = PortalMage:CountItems(17031)
-		portalRunes = PortalMage:CountItems(17032)
-		self.teleports:SetText(teleportRunes)
-		self.portals:SetText(portalRunes)
-		AdjustReagentDisplay(self)
+	elseif event == "UNIT_SPELLCAST_START" then
+		if IsInGroup() or IsInRaid() then
+			if arg1 == "player" and PortalMage:SpellIsPortal(arg3) and portalMageData.AnnouncePortal then
+				local msg = string.format(portalMageData.PortalAnnouncement, C_Spell.GetSpellInfo(arg3).name)
+				SendChatMessage(msg, IsInGroup(LE_PARTY_CATEGORY_INSTANCE) and "INSTANCE_CHAT" or IsInRaid() and "RAID" or "PARTY")
+			elseif arg1 == "player" and PortalMage:SpellIsTeleport(arg3) and portalMageData.AnnounceTeleport then
+				local msg = string.format(portalMageData.TeleportAnnouncement, C_Spell.GetSpellInfo(arg3).name)
+				SendChatMessage(msg, IsInGroup(LE_PARTY_CATEGORY_INSTANCE) and "INSTANCE_CHAT" or IsInRaid() and "RAID" or "PARTY")
+			end
+		end
 	end
 end
 
@@ -739,6 +734,24 @@ function PortalMage:NewSpell(id)
 	return false
 end
 
+function PortalMage:SpellIsPortal(id)
+	for k, v in pairs(self.portals) do
+		if id == v then 
+			return true
+		end
+	end
+	return false
+end
+
+function PortalMage:SpellIsTeleport(id)
+	for k, v in pairs(self.teleports) do
+		if id == v then 
+			return true
+		end
+	end
+	return false
+end
+
 function PortalMage:SpellOnList(id)
 	local name = GetSpellInfo(id)
 	for k, v in pairs(self.portals) do
@@ -756,32 +769,8 @@ function PortalMage:SetupFrame(frame)
 	frame:SetFrameStrata("LOW")
 	frame:RegisterEvent("PLAYER_LOGIN")
 	frame:RegisterEvent("LEARNED_SPELL_IN_TAB")
-	frame:RegisterEvent("BAG_UPDATE")
+	frame:RegisterEvent("UNIT_SPELLCAST_START")
 	frame:SetScript("OnEvent", PortalMage.frameOnEvent)
-	frame.teleports = frame:CreateFontString(nil, "OVERLAY", "GameFontWhite")
-	frame.teleports:SetTextColor(1, 1, 0)
-	frame.teleports:SetText(teleportRunes)
-	--frame.texture = frame:CreateTexture()
-	--frame.texture:SetTexture("Interface/Tooltips/UI-Tooltip-Background")
-	--frame.texture:SetVertexColor(0, 0, 0, 1)
-	--frame.texture:SetAllPoints(frame.teleports)
-	frame.portals = frame:CreateFontString(nil, "OVERLAY", "GameFontWhite")
-	frame.portals:SetTextColor(0, 1, 0)
-	frame.portals:SetText(portalRunes)
-	--frame.texture = frame:CreateTexture()
-	--frame.texture:SetTexture("Interface/Tooltips/UI-Tooltip-Background")
-	--frame.texture:SetVertexColor(0, 0, 0, 1)
-	--frame.texture:SetAllPoints(frame.portals)
-	if portalMageData.Runes.Portal.show then
-		frame.portals:Show()
-	else
-		frame.portals:Hide()
-	end
-	if portalMageData.Runes.Teleport.show then
-		frame.teleports:Show()
-	else
-		frame.teleports:Hide()
-	end
 	if portalMageData.Mouseover then
 		frame:SetAlpha(0)
 	else
@@ -828,60 +817,65 @@ function PortalMage:SetupButtonsVertical(frame, move)
 	local length = 0
 	if self.faction == "Alliance" then
 		if portalMageSpells["stormwind"] then
-			self.button1, length = self:SetupButtonVertical("PortalMageButton1", self.button1, length, "stormwind", 121, frame, PortalMage.icons["stormwind"])
+			self.button1, length = self:SetupButtonVertical("PortalMageButton1", self.button1, length, "stormwind", start + 1, frame, PortalMage.icons["stormwind"])
 		end
 		if portalMageSpells["ironforge"] then
-			self.button2, length = self:SetupButtonVertical("PortalMageButton2", self.button2, length, "ironforge", 122, frame, PortalMage.icons["ironforge"])
+			self.button2, length = self:SetupButtonVertical("PortalMageButton2", self.button2, length, "ironforge", start + 2, frame, PortalMage.icons["ironforge"])
 		end
 		if portalMageSpells["darnassus"] then
-			self.button3, length = self:SetupButtonVertical("PortalMageButton3", self.button3, length, "darnassus", 123, frame, PortalMage.icons["darnassus"])
+			self.button3, length = self:SetupButtonVertical("PortalMageButton3", self.button3, length, "darnassus", start + 3, frame, PortalMage.icons["darnassus"])
 		end
 		if portalMageSpells["exodar"] then
-			self.button4, length = self:SetupButtonVertical("PortalMageButton4", self.button4, length, "exodar", 124, frame, PortalMage.icons["exodar"])
+			self.button4, length = self:SetupButtonVertical("PortalMageButton4", self.button4, length, "exodar", start + 4, frame, PortalMage.icons["exodar"])
 		end
 		if portalMageSpells["theramore"] then
-			self.button5, length = self:SetupButtonVertical("PortalMageButton5", self.button5, length, "theramore", 125, frame, PortalMage.icons["theramore"])
+			self.button5, length = self:SetupButtonVertical("PortalMageButton5", self.button5, length, "theramore", start + 5, frame, PortalMage.icons["theramore"])
 		end
 		if portalMageSpells["shattrath"] then
-			self.button6, length = self:SetupButtonVertical("PortalMageButton6", self.button6, length, "shattrathA", 126, frame, PortalMage.icons["shattrath"])
+			self.button6, length = self:SetupButtonVertical("PortalMageButton6", self.button6, length, "shattrathA", start + 6, frame, PortalMage.icons["shattrath"])
 		end
 		if portalMageSpells["dalaran"] then
-			self.button7, length = self:SetupButtonVertical("PortalMageButton7", self.button7, length, "dalaran", 127, frame, PortalMage.icons["dalaran"])
+			self.button7, length = self:SetupButtonVertical("PortalMageButton7", self.button7, length, "dalaran", start + 7, frame, PortalMage.icons["dalaran"])
 		end
 		if portalMageSpells["tolbarad"] then
-			self.button8, length = self:SetupButtonVertical("PortalMageButton8", self.button8, length, "tolbaradA", 128, frame, PortalMage.icons["tolbarad"])
+			self.button8, length = self:SetupButtonVertical("PortalMageButton8", self.button8, length, "tolbaradA", start + 8, frame, PortalMage.icons["tolbarad"])
+		end
+		if portalMageSpells["pandaria"] then
+			self.button9, length = self:SetupButtonVertical("PortalMageButton9", self.button9, length, "pandariaA", start + 9, frame, PortalMage.icons["pandaria"])
 		end
 	else
 		if portalMageSpells["orgrimmar"] then
-			self.button1, length = self:SetupButtonVertical("PortalMageButton1", self.button1, length, "orgrimmar", 121, frame, PortalMage.icons["orgrimmar"])
+			self.button1, length = self:SetupButtonVertical("PortalMageButton1", self.button1, length, "orgrimmar", start + 1, frame, PortalMage.icons["orgrimmar"])
 		end
 		if portalMageSpells["undercity"] then
-			self.button2, length = self:SetupButtonVertical("PortalMageButton2", self.button2, length, "undercity", 122, frame, PortalMage.icons["undercity"])
+			self.button2, length = self:SetupButtonVertical("PortalMageButton2", self.button2, length, "undercity", start + 2, frame, PortalMage.icons["undercity"])
 		end
 		if portalMageSpells["thunderbluff"] then
-			self.button3, length = self:SetupButtonVertical("PortalMageButton3", self.button3, length, "thunderbluff", 123, frame, PortalMage.icons["thunderbluff"])
+			self.button3, length = self:SetupButtonVertical("PortalMageButton3", self.button3, length, "thunderbluff", start + 3, frame, PortalMage.icons["thunderbluff"])
 		end
 		if portalMageSpells["silvermoon"] then
-			self.button4, length = self:SetupButtonVertical("PortalMageButton4", self.button4, length, "silvermoon", 124, frame, PortalMage.icons["silvermoon"])
+			self.button4, length = self:SetupButtonVertical("PortalMageButton4", self.button4, length, "silvermoon", start + 4, frame, PortalMage.icons["silvermoon"])
 		end
 		if portalMageSpells["stonard"] then
-			self.button5, length = self:SetupButtonVertical("PortalMageButton5", self.button5, length, "stonard", 125, frame, PortalMage.icons["stonard"])
+			self.button5, length = self:SetupButtonVertical("PortalMageButton5", self.button5, length, "stonard", start + 5, frame, PortalMage.icons["stonard"])
 		end
 		if portalMageSpells["shattrath"] then
-			self.button6, length = self:SetupButtonVertical("PortalMageButton6", self.button6, length, "shattrathH", 126, frame, PortalMage.icons["shattrath"])
+			self.button6, length = self:SetupButtonVertical("PortalMageButton6", self.button6, length, "shattrathH", start + 6, frame, PortalMage.icons["shattrath"])
 		end
 		if portalMageSpells["dalaran"] then
-			self.button7, length = self:SetupButtonVertical("PortalMageButton7", self.button7, length, "dalaran", 127, frame, PortalMage.icons["dalaran"])
+			self.button7, length = self:SetupButtonVertical("PortalMageButton7", self.button7, length, "dalaran", start + 7, frame, PortalMage.icons["dalaran"])
 		end
 		if portalMageSpells["tolbarad"] then
-			self.button8, length = self:SetupButtonVertical("PortalMageButton8", self.button8, length, "tolbaradH", 128, frame, PortalMage.icons["tolbarad"])
+			self.button8, length = self:SetupButtonVertical("PortalMageButton8", self.button8, length, "tolbaradH", start + 8, frame, PortalMage.icons["tolbarad"])
+		end
+		if portalMageSpells["pandaria"] then
+			self.button9, length = self:SetupButtonVertical("PortalMageButton9", self.button9, length, "pandariaH", start + 9, frame, PortalMage.icons["pandaria"])
 		end
 	end
 	frame:SetWidth(40)
 	move:SetWidth(40)
 	frame:SetHeight(-length)
 	move:SetHeight(-length)
-	AdjustReagentDisplay(frame)
 	collectgarbage("collect")
 end
 
@@ -890,92 +884,66 @@ function PortalMage:SetupButtonsHorizontal(frame, move)
 	local length = 0
 	if self.faction == "Alliance" then
 		if portalMageSpells["stormwind"] then
-			self.button1, length = self:SetupButtonHorizontal("PortalMageButton1", self.button1, length, "stormwind", 121, frame, PortalMage.icons["stormwind"])
+			self.button1, length = self:SetupButtonHorizontal("PortalMageButton1", self.button1, length, "stormwind", start + 1, frame, PortalMage.icons["stormwind"])
 		end
 		if portalMageSpells["ironforge"] then
-			self.button2, length = self:SetupButtonHorizontal("PortalMageButton2", self.button2, length, "ironforge", 122, frame, PortalMage.icons["ironforge"])
+			self.button2, length = self:SetupButtonHorizontal("PortalMageButton2", self.button2, length, "ironforge", start + 2, frame, PortalMage.icons["ironforge"])
 		end
 		if portalMageSpells["darnassus"] then
-			self.button3, length = self:SetupButtonHorizontal("PortalMageButton3", self.button3, length, "darnassus", 123, frame, PortalMage.icons["darnassus"])
+			self.button3, length = self:SetupButtonHorizontal("PortalMageButton3", self.button3, length, "darnassus", start + 3, frame, PortalMage.icons["darnassus"])
 		end
 		if portalMageSpells["exodar"] then
-			self.button4, length = self:SetupButtonHorizontal("PortalMageButton4", self.button4, length, "exodar", 124, frame, PortalMage.icons["exodar"])
+			self.button4, length = self:SetupButtonHorizontal("PortalMageButton4", self.button4, length, "exodar", start + 4, frame, PortalMage.icons["exodar"])
 		end
 		if portalMageSpells["theramore"] then
-			self.button5, length = self:SetupButtonHorizontal("PortalMageButton5", self.button5, length, "theramore", 125, frame, PortalMage.icons["theramore"])
+			self.button5, length = self:SetupButtonHorizontal("PortalMageButton5", self.button5, length, "theramore", start + 5, frame, PortalMage.icons["theramore"])
 		end
 		if portalMageSpells["shattrath"] then
-			self.button6, length = self:SetupButtonHorizontal("PortalMageButton6", self.button6, length, "shattrathA", 126, frame, PortalMage.icons["shattrath"])
+			self.button6, length = self:SetupButtonHorizontal("PortalMageButton6", self.button6, length, "shattrathA", start + 6, frame, PortalMage.icons["shattrath"])
 		end
 		if portalMageSpells["dalaran"] then
-			self.button7, length = self:SetupButtonHorizontal("PortalMageButton7", self.button7, length, "dalaran", 127, frame, PortalMage.icons["dalaran"])
+			self.button7, length = self:SetupButtonHorizontal("PortalMageButton7", self.button7, length, "dalaran", start + 7, frame, PortalMage.icons["dalaran"])
 		end
 		if portalMageSpells["tolbarad"] then
-			self.button8, length = self:SetupButtonHorizontal("PortalMageButton8", self.button8, length, "tolbaradA", 128, frame, PortalMage.icons["tolbarad"])
+			self.button8, length = self:SetupButtonHorizontal("PortalMageButton8", self.button8, length, "tolbaradA", start + 8, frame, PortalMage.icons["tolbarad"])
+		end
+		if portalMageSpells["pandaria"] then
+			self.button9, length = self:SetupButtonHorizontal("PortalMageButton9", self.button9, length, "pandariaA", start + 9, frame, PortalMage.icons["pandaria"])
 		end
 	else
 		if portalMageSpells["orgrimmar"] then
-			self.button1, length = self:SetupButtonHorizontal("PortalMageButton1", self.button1, length, "orgrimmar", 121, frame, PortalMage.icons["orgrimmar"])
+			self.button1, length = self:SetupButtonHorizontal("PortalMageButton1", self.button1, length, "orgrimmar", start + 1, frame, PortalMage.icons["orgrimmar"])
 		end
 		if portalMageSpells["undercity"] then
-			self.button2, length = self:SetupButtonHorizontal("PortalMageButton2", self.button2, length, "undercity", 122, frame, PortalMage.icons["undercity"])
+			self.button2, length = self:SetupButtonHorizontal("PortalMageButton2", self.button2, length, "undercity", start + 2, frame, PortalMage.icons["undercity"])
 		end
 		if portalMageSpells["thunderbluff"] then
-			self.button3, length = self:SetupButtonHorizontal("PortalMageButton3", self.button3, length, "thunderbluff", 123, frame, PortalMage.icons["thunderbluff"])
+			self.button3, length = self:SetupButtonHorizontal("PortalMageButton3", self.button3, length, "thunderbluff", start + 3, frame, PortalMage.icons["thunderbluff"])
 		end
 		if portalMageSpells["silvermoon"] then
-			self.button4, length = self:SetupButtonHorizontal("PortalMageButton4", self.button4, length, "silvermoon", 124, frame, PortalMage.icons["silvermoon"])
+			self.button4, length = self:SetupButtonHorizontal("PortalMageButton4", self.button4, length, "silvermoon", start + 4, frame, PortalMage.icons["silvermoon"])
 		end
 		if portalMageSpells["stonard"] then
-			self.button5, length = self:SetupButtonHorizontal("PortalMageButton5", self.button5, length, "stonard", 125, frame, PortalMage.icons["stonard"])
+			self.button5, length = self:SetupButtonHorizontal("PortalMageButton5", self.button5, length, "stonard", start + 5, frame, PortalMage.icons["stonard"])
 		end
 		if portalMageSpells["shattrath"] then
-			self.button6, length = self:SetupButtonHorizontal("PortalMageButton6", self.button6, length, "shattrathH", 126, frame, PortalMage.icons["shattrath"])
+			self.button6, length = self:SetupButtonHorizontal("PortalMageButton6", self.button6, length, "shattrathH", start + 6, frame, PortalMage.icons["shattrath"])
 		end
 		if portalMageSpells["dalaran"] then
-			self.button7, length = self:SetupButtonHorizontal("PortalMageButton7", self.button7, length, "dalaran", 127, frame, PortalMage.icons["dalaran"])
+			self.button7, length = self:SetupButtonHorizontal("PortalMageButton7", self.button7, length, "dalaran", start + 7, frame, PortalMage.icons["dalaran"])
 		end
 		if portalMageSpells["tolbarad"] then
-			self.button8, length = self:SetupButtonHorizontal("PortalMageButton8", self.button8, length, "tolbaradH", 128, frame, PortalMage.icons["tolbarad"])
+			self.button8, length = self:SetupButtonHorizontal("PortalMageButton8", self.button8, length, "tolbaradH", start + 8, frame, PortalMage.icons["tolbarad"])
+		end
+		if portalMageSpells["pandaria"] then
+			self.button9, length = self:SetupButtonHorizontal("PortalMageButton9", self.button9, length, "pandariaH", start + 9, frame, PortalMage.icons["pandaria"])
 		end
 	end
 	frame:SetWidth(length)
 	move:SetWidth(length)
 	frame:SetHeight(40)
 	move:SetHeight(40)
-	AdjustReagentDisplay(frame)
 	collectgarbage("collect")
-end
-
-function AdjustReagentDisplay(frame)
-	frame.portals:ClearAllPoints()
-	frame.teleports:ClearAllPoints()
-	local offset = 15
-	if portalRunes > 99 then
-		offset = offset + 17
-	elseif portalRunes > 9 then
-		offset = offset + 7
-	end
-	if string.find(portalMageData.Runes.Portal.position, "LEFT") then
-		offset = -offset
-	end
-	frame.portals:SetPoint(portalMageData.Runes.Portal.position, offset, 0)
-	offset = 15
-	if teleportRunes > 99 then
-		offset = offset + 17
-	elseif teleportRunes > 9 then
-		offset = offset + 7
-	end
-	if string.find(portalMageData.Runes.Teleport.position, "LEFT") then
-		offset = -offset
-	end
-	frame.teleports:SetPoint(portalMageData.Runes.Teleport.position, offset, 0)
-end
-
-function PortalMage.buttonOnUpdate(self)
-	if Masque ~= nil then
-		group:ReSkin()
-	end
 end
 
 function PortalMage:SetupButtonVertical(name, button, y, index, id, frame, icon)
@@ -1058,7 +1026,8 @@ function PortalMage:ClearButtons()
 	self:ClearButton(self.button5, 125)
 	self:ClearButton(self.button6, 126)
 	self:ClearButton(self.button7, 127)
-	self:ClearButton(self.button7, 128)
+	self:ClearButton(self.button8, 128)
+	self:ClearButton(self.button9, 129)
 end
 
 function PortalMage:ClearButton(button, id)

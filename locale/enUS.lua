@@ -10,11 +10,7 @@ L["Vertical"] = true
 L["Horizontal"] = true
 L["Scale"] = true
 L["you scale whole bar up or down"] = true
-L["Rune of Portals"] = true
-L["Rune of Teleportaion"] = true
 L["Enable"] = true
-L["enable Rune of Portals display near the bar"] = true
-L["enable Rune of Teleportaion display near the bar"] = true
 L["Position"] = true
 L["Top Left"] = true
 L["Bottom Left"] = true
@@ -27,6 +23,15 @@ L["change bar opacity"] = true
 L["Show only on mouse over"] = true
 L["when enabled bar will only be visible when you mouse over it"] = true
 L["Portals"] = true
+L["Announcement"] = true
+L["Announce portal"] = true
+L["when enabled you will announce portal on Say channel"] = true
+L["Portal announcement"] = true
+L["put your announcement for portal here, use %s as placeholder for spell name"] = true
+L["Announce teleport"] = true
+L["when enabled you will announce teleport on Say channel"] = true
+L["Teleport announcement"] = true
+L["put your announcement for tortal here, use %s as placeholder for spell name"] = true
 
 -- Portals - Alliance -
 L["Stormwind"] = true
@@ -60,6 +65,8 @@ L["Dalaran"] = true
 L["toggles portal and teleport to Dalaran"] = true
 L["Tol Barad"] = true
 L["toggles portal and teleport to Tol Barad"] = true
+L["Vale of Eternal Blossoms"] = true
+L["toggles portal and teleport to Vale of Eternal Blossoms"] = true
 
 -- toltip --
 L["Left Click:"] = true
