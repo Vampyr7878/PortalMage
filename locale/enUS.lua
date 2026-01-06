@@ -80,6 +80,8 @@ L["Valdrakken"] = true
 L["toggles portal and teleport to Valdrakken"] = true
 L["Dornogal"] = true
 L["toggles portal and teleport to Dornogal"] = true
+L["Midnight Silvermoon"] = true
+L["toggles portal and teleport to Midnight version of Silvermoon"] = true
 
 -- toltip --
 L["Left Click:"] = true
