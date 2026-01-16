@@ -16,9 +16,9 @@ L["Enable"] = true
 L["enable Rune of Portals display near the bar"] = true
 L["enable Rune of Teleportaion display near the bar"] = true
 L["Position"] = true
-L["TopLeft"] = true
-L["BottomLeft"] = true
-L["TopRight"] = true
+L["Top Left"] = true
+L["Bottom Left"] = true
+L["Top Right"] = true
 L["Bottom Right"] = true
 L["Invert mouse buttons"] = true
 L["when enabled left mouse button will cast teleport spell while right mouse button will cast portal spell"] = true
@@ -27,6 +27,15 @@ L["change bar opacity"] = true
 L["Show only on mouse over"] = true
 L["when enabled bar will only be visible when you mouse over it"] = true
 L["Portals"] = true
+L["Announcement"] = true
+L["Announce portal"] = true
+L["when enabled you will announce portal on Say channel"] = true
+L["Portal announcement"] = true
+L["put your announcement for portal here, use %s as placeholder for spell name"] = true
+L["Announce teleport"] = true
+L["when enabled you will announce teleport on Say channel"] = true
+L["Teleport announcement"] = true
+L["put your announcement for tortal here, use %s as placeholder for spell name"] = true
 
 -- Portals - Alliance -
 L["Stormwind"] = true
@@ -53,10 +62,9 @@ L["Stonard"] = true
 L["toggles portal and teleport to Stonard"] = true
 
 -- Portals - neutral city -
-
 L["Shattrath"] = true
 L["toggles portal and teleport to Shattrath"] = true
 
 -- toltip --
-L["Right Click:"] = true
+L["Left Click:"] = true
 L["Right Click:"] = true

@@ -1,11 +1,23 @@
-## Interface: 20504
+## Interface: 20505
 ## Title: Portal Mage
 ## Title-koKR: 포탈 매직-Portal Mage
 ## Notes: Bar with portals and teleports.
 ## Notes-koKR: 포털과 텔레포트가 있는 바.
 ## Author: Vampyr78
-## Version: 2.1-tbc
+## Version: 1.8-tbc
 ## SavedVariablesPerCharacter: portalMageData, portalMageSpells
+## IconTexture: Interface\Icons\spell_arcane_teleportshattrath.blp
+## Category-enUS: Action Bars
+## Category-deDE: Aktionsleisten
+## Category-esES: Barras de acción
+## Category-esMX: Barras de acción
+## Category-frFR: Barres d’action
+## Category-itIT: Barre delle azioni
+## Category-koKR: 행동 단축바
+## Category-ptBR: Barras de ação
+## Category-ruRU: Панели команд
+## Category-zhCN: 动作条
+## Category-zhTW: 快捷列
 ## OptionalDeps: Masque
 embeds.xml
 Locale\enUS.lua
