@@ -129,8 +129,8 @@ function PortalMage:OnInitialize()
 		if portalMageData.TeleportAnnouncement == nil then
 			portalMageData.TeleportAnnouncement = "Casting %s!"
 		end
-		teleportRunes = self:CountItems(17031)
-		portalRunes = self:CountItems(17032)
+		teleportRunes = PortalMage:CountItems(17031)
+		portalRunes = PortalMage:CountItems(17032)
 		self:SetupFrame(self.frame)
 		self:SetupMoveFrame(self.move)
 		if self.faction == "Alliance" then
@@ -732,6 +732,10 @@ end
 
 function PortalMage.frameOnEvent(self, event, arg1, _, arg3)
 	if event == "PLAYER_LOGIN" then
+		teleportRunes = PortalMage:CountItems(17031)
+		portalRunes = PortalMage:CountItems(17032)
+		self.teleports:SetText(teleportRunes)
+		self.portals:SetText(portalRunes)
 		self:SetHeight(44)
 		PortalMage.move:SetHeight(44);
 		PortalMage.buttons = {}
