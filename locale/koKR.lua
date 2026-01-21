@@ -81,6 +81,8 @@ L["Valdrakken"] = "발드라켄"
 L["toggles portal and teleport to Valdrakken"] = "차원문과 순간이동을 발드라켄 전환."
 L["Dornogal"] = "도르노갈"
 L["toggles portal and teleport to Dornogal"] = "차원문과 순간이동을 도르노갈 전환."
+L["Midnight Silvermoon"] = "한밤 실버문"
+L["toggles portal and teleport to Midnight version of Silvermoon"] = "차원문과 순간이동을 한밤 실버문로 버전 전환."
 
 -- tooltip --
 L["Left Click:"] = "좌 클릭:"

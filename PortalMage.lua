@@ -4,6 +4,44 @@ local group = {}
 local Masque
 local start = 180
 
+portalMageIndicesA = {"stormwind",
+					  "ironforge",
+					  "darnassus",
+					  "exodar",
+					  "theramore",
+					  "dalaran",
+					  "shattrath",
+					  "northrend",
+					  "tolbarad",
+					  "pandaria",
+					  "stormshield",
+					  "brokenisles",
+					  "orderhall",
+					  "boralus",
+					  "oribos",
+					  "valdrakken",
+					  "dornogal",
+					  "quelthalas"}
+
+portalMageIndicesH = {"orgrimmar",
+					  "undercity",
+					  "thunderbluff",
+					  "silvermoon",
+					  "stonard",
+					  "dalaran",
+					  "shattrath",
+					  "northrend",
+					  "tolbarad",
+					  "pandaria",
+					  "warspear",
+					  "brokenisles",
+					  "orderhall",
+					  "dazaralor",
+					  "oribos",
+					  "valdrakken",
+					  "dornogal",
+					  "quelthalas"}
+
 portalMageSpells = {["stormwind"] = true,
 					["orgrimmar"] = true,
 					["ironforge"] = true,
@@ -27,7 +65,8 @@ portalMageSpells = {["stormwind"] = true,
 					["dazaralor"] = true,
 					["oribos"] = true,
 					["valdrakken"] = true,
-					["dornogal"] = true}
+					["dornogal"] = true,
+					["quelthalas"] = true}
 
 PortalMage.portals = {["stormwind"] = 10059,
 					  ["orgrimmar"] = 11417,
@@ -55,7 +94,8 @@ PortalMage.portals = {["stormwind"] = 10059,
 					  ["dazaralor"] = 281402,
 					  ["oribos"] = 344597,
 					  ["valdrakken"] = 395289,
-					  ["dornogal"] = 446534}
+					  ["dornogal"] = 446534,
+					  ["quelthalas"] = 1259194}
 
 PortalMage.teleports = {["stormwind"] = 3561,
 						["orgrimmar"] = 3567,
@@ -79,11 +119,12 @@ PortalMage.teleports = {["stormwind"] = 3561,
 						["warspear"] = 176242,
 						["brokenisles"] = 224869,
 						["orderhall"] = 193759,
-					    ["boralus"] = 281403,
-					    ["dazaralor"] = 281404,
+						["boralus"] = 281403,
+						["dazaralor"] = 281404,
 						["oribos"] = 344587,
 						["valdrakken"] = 395277,
-						["dornogal"] = 446540}
+						["dornogal"] = 446540,
+						["quelthalas"] = 1259190}
 
 PortalMage.icons = {["stormwind"] = "Interface/ICONS/Spell_Arcane_TeleportStormwind",
 					["orgrimmar"] = "Interface/ICONS/Spell_Arcane_TeleportOrgrimmar",
@@ -108,7 +149,8 @@ PortalMage.icons = {["stormwind"] = "Interface/ICONS/Spell_Arcane_TeleportStormw
 					["dazaralor"] = "Interface/ICONS/Spell_Arcane_PortalZandalar",
 					["oribos"] = "Interface/ICONS/Spell_Arcane_TeleportOribos",
 					["valdrakken"] = "Interface/ICONS/Spell_Arcane_TeleportValdrakken",
-					["dornogal"] = "Interface/ICONS/Inv_Spell_Arcane_TelepotDornogal"}
+					["dornogal"] = "Interface/ICONS/Inv_Spell_Arcane_TelepotDornogal",
+					["quelthalas"] = "Interface/ICONS/Inv_12_Mage_Teleport"}
 
 function PortalMage:OnInitialize()
 	_, self.class = UnitClass("player")
@@ -381,6 +423,13 @@ function PortalMage:OnInitialize()
 								desc = L["toggles portal and teleport to Dornogal"],
 								set = "Set",
 								get = "Get"
+							},
+							quelthalas = {
+								name = L["Midnight Silvermoon"],
+								type = "toggle",
+								desc = L["toggles portal and teleport to Midnight version of Silvermoon"],
+								set = "Set",
+								get = "Get"
 							}
 						}
 					}
@@ -611,6 +660,13 @@ function PortalMage:OnInitialize()
 								desc = L["toggles portal and teleport to Dornogal"],
 								set = "Set",
 								get = "Get"
+							},
+							quelthalas = {
+								name = L["Midnight Silvermoon"],
+								type = "toggle",
+								desc = L["toggles portal and teleport to Midnight version of Silvermoon"],
+								set = "Set",
+								get = "Get"
 							}
 						}
 					}
@@ -753,136 +809,31 @@ end
 
 function PortalMage:AddMasqueButtons()
 	if self.faction == "Alliance" then
-		if portalMageSpells["stormwind"] then
-			group:AddButton(self.button1)
-		end
-		if portalMageSpells["ironforge"] then
-			group:AddButton(self.button2)
-		end
-		if portalMageSpells["darnassus"] then
-			group:AddButton(self.button3)
-		end
-		if portalMageSpells["exodar"] then
-			group:AddButton(self.button4)
-		end
-		if portalMageSpells["theramore"] then
-			group:AddButton(self.button5)
-		end
-		if portalMageSpells["dalaran"] then
-			group:AddButton(self.button6)
-		end
-		if portalMageSpells["shattrath"] then
-			group:AddButton(self.button7)
-		end
-		if portalMageSpells["northrend"] then
-			group:AddButton(self.button8)
-		end
-		if portalMageSpells["tolbarad"] then
-			group:AddButton(self.button9)
-		end
-		if portalMageSpells["pandaria"] then
-			group:AddButton(self.button10)
-		end
-		if portalMageSpells["stormshield"] then
-			group:AddButton(self.button11)
-		end
-		if portalMageSpells["brokenisles"] then
-			group:AddButton(self.button12)
-		end
-		if portalMageSpells["orderhall"] then
-			group:AddButton(self.button13)
-		end
-		if portalMageSpells["boralus"] then
-			group:AddButton(self.button14)
-		end
-		if portalMageSpells["oribos"] then
-			group:AddButton(self.button15)
-		end
-		if portalMageSpells["valdrakken"] then
-			group:AddButton(self.button16)
-		end
-		if portalMageSpells["dornogal"] then
-			group:AddButton(self.button17)
+		for i = 1, table.getn(portalMageIndicesA), 1 do
+			if portalMageSpells[portalMageIndicesA[i]] then
+				group:AddButton(self.buttons[i])
+			end
 		end
 	else
-		if portalMageSpells["orgrimmar"] then
-			group:AddButton(self.button1)
-		end
-		if portalMageSpells["undercity"] then
-			group:AddButton(self.button2)
-		end
-		if portalMageSpells["thunderbluff"] then
-			group:AddButton(self.button3)
-		end
-		if portalMageSpells["silvermoon"] then
-			group:AddButton(self.button4)
-		end
-		if portalMageSpells["stonard"] then
-			group:AddButton(self.button5)
-		end
-		if portalMageSpells["dalaran"] then
-			group:AddButton(self.button6)
-		end
-		if portalMageSpells["shattrath"] then
-			group:AddButton(self.button7)
-		end
-		if portalMageSpells["northrend"] then
-			group:AddButton(self.button8)
-		end
-		if portalMageSpells["tolbarad"] then
-			group:AddButton(self.button9)
-		end
-		if portalMageSpells["pandaria"] then
-			group:AddButton(self.button10)
-		end
-		if portalMageSpells["warspear"] then
-			group:AddButton(self.button11)
-		end
-		if portalMageSpells["brokenisles"] then
-			group:AddButton(self.button12)
-		end
-		if portalMageSpells["orderhall"] then
-			group:AddButton(self.button13)
-		end
-		if portalMageSpells["dazaralor"] then
-			group:AddButton(self.button14)
-		end
-		if portalMageSpells["oribos"] then
-			group:AddButton(self.button15)
-		end
-		if portalMageSpells["valdrakken"] then
-			group:AddButton(self.button16)
-		end
-		if portalMageSpells["dornogal"] then
-			group:AddButton(self.button17)
+		for i = 1, table.getn(portalMageIndicesH), 1 do
+			if portalMageSpells[portalMageIndicesH[i]] then
+				group:AddButton(self.buttons[i])
+			end
 		end
 	end
 end
 
 function PortalMage:RemoveMasqueButtons()
-	group:RemoveButton(self.button1)
-	group:RemoveButton(self.button2)
-	group:RemoveButton(self.button3)
-	group:RemoveButton(self.button4)
-	group:RemoveButton(self.button5)
-	group:RemoveButton(self.button6)
-	group:RemoveButton(self.button7)
-	group:RemoveButton(self.button8)
-	group:RemoveButton(self.button9)
-	group:RemoveButton(self.button10)
-	group:RemoveButton(self.button11)
-	group:RemoveButton(self.button12)
-	group:RemoveButton(self.button13)
-	group:RemoveButton(self.button14)
-	group:RemoveButton(self.button15)
-	group:RemoveButton(self.button16)
-	group:RemoveButton(self.button17)
+	for i = 1, table.getn(portalMageIndicesA), 1 do
+		group:RemoveButton(self.buttons[i])
+	end
 end
 
 function PortalMage.frameOnEvent(self, event, arg1, _, arg3)
 	if event == "PLAYER_LOGIN" then
 		self:SetHeight(44)
 		PortalMage.move:SetHeight(44);
+		PortalMage.buttons = {}
 		if portalMageData.Vertical then
 			PortalMage:SetupButtonsVertical(self, PortalMage.move)
 		else
@@ -893,9 +844,10 @@ function PortalMage.frameOnEvent(self, event, arg1, _, arg3)
 			group:ReSkin()
 		end
 		self:UnregisterEvent("PLAYER_LOGIN")
-	elseif event == "LEARNED_SPELL_IN_TAB" and PortalMage:NewSpell(arg1) then
+	elseif event == "LEARNED_SPELL_IN_SKILL_LINE" and PortalMage:NewSpell(arg1) then
 		self:SetHeight(44)
 		PortalMage.move:SetHeight(44);
+		PortalMage.buttons = {}
 		if portalMageData.Vertical then
 			PortalMage:SetupButtonsVertical(self, PortalMage.move)
 		else
@@ -976,7 +928,7 @@ function PortalMage:SetupFrame(frame)
 	frame:SetScale(0.8 * portalMageData.Scale)
 	frame:SetFrameStrata("LOW")
 	frame:RegisterEvent("PLAYER_LOGIN")
-	frame:RegisterEvent("LEARNED_SPELL_IN_TAB")
+	frame:RegisterEvent("LEARNED_SPELL_IN_SKILL_LINE")
 	frame:RegisterEvent("UNIT_SPELLCAST_START")
 	frame:SetScript("OnEvent", PortalMage.frameOnEvent)
 	if portalMageData.Mouseover then
@@ -1005,112 +957,33 @@ function PortalMage:SetupMoveFrame(frame)
 	frame:Hide()
 end
 
+function PortalMage:IsFactionSplit(index)
+	if index == "shattrath" or index == "tolbarad" or index == "pandaria" then
+		return index .. "A"
+	end
+	return index
+end
+
 function PortalMage:SetupButtonsVertical(frame, move)
 	self:ClearButtons()
 	local length = 0
+	local index = "0"
+	local name = ""
 	if self.faction == "Alliance" then
-		if portalMageSpells["stormwind"] then
-			self.button1, length = self:SetupButtonVertical("PortalMageButton1", self.button1, length, "stormwind", start + 1, frame, PortalMage.icons["stormwind"])
-		end
-		if portalMageSpells["ironforge"] then
-			self.button2, length = self:SetupButtonVertical("PortalMageButton2", self.button2, length, "ironforge", start + 2, frame, PortalMage.icons["ironforge"])
-		end
-		if portalMageSpells["darnassus"] then
-			self.button3, length = self:SetupButtonVertical("PortalMageButton3", self.button3, length, "darnassus", start + 3, frame, PortalMage.icons["darnassus"])
-		end
-		if portalMageSpells["exodar"] then
-			self.button4, length = self:SetupButtonVertical("PortalMageButton4", self.button4, length, "exodar", start + 4, frame, PortalMage.icons["exodar"])
-		end
-		if portalMageSpells["theramore"] then
-			self.button5, length = self:SetupButtonVertical("PortalMageButton5", self.button5, length, "theramore", start + 5, frame, PortalMage.icons["theramore"])
-		end
-		if portalMageSpells["dalaran"] then
-			self.button6, length = self:SetupButtonVertical("PortalMageButton6", self.button6, length, "dalaran", start + 6, frame, PortalMage.icons["dalaran"])
-		end
-		if portalMageSpells["shattrath"] then
-			self.button7, length = self:SetupButtonVertical("PortalMageButton7", self.button7, length, "shattrathA", start + 7, frame, PortalMage.icons["shattrath"])
-		end
-		if portalMageSpells["northrend"] then
-			self.button8, length = self:SetupButtonVertical("PortalMageButton8", self.button8, length, "northrend", start + 8, frame, PortalMage.icons["northrend"])
-		end
-		if portalMageSpells["tolbarad"] then
-			self.button9, length = self:SetupButtonVertical("PortalMageButton9", self.button9, length, "tolbaradA", start + 9, frame, PortalMage.icons["tolbarad"])
-		end
-		if portalMageSpells["pandaria"] then
-			self.button10, length = self:SetupButtonVertical("PortalMageButton10", self.button10, length, "pandariaA", start + 10, frame, PortalMage.icons["pandaria"])
-		end
-		if portalMageSpells["stormshield"] then
-			self.button11, length = self:SetupButtonVertical("PortalMageButton11", self.button11, length, "stormshield", start + 11, frame, PortalMage.icons["stormshield"])
-		end
-		if portalMageSpells["brokenisles"] then
-			self.button12, length = self:SetupButtonVertical("PortalMageButton12", self.button12, length, "brokenisles", start + 12, frame, PortalMage.icons["brokenisles"])
-		end
-		if portalMageSpells["orderhall"] then
-			self.button13, length = self:SetupButtonVertical("PortalMageButton13", self.button13, length, "orderhall", start + 13, frame, PortalMage.icons["orderhall"])
-		end
-		if portalMageSpells["boralus"] then
-			self.button14, length = self:SetupButtonVertical("PortalMageButton14", self.button14, length, "boralus", start + 14, frame, PortalMage.icons["boralus"])
-		end
-		if portalMageSpells["oribos"] then
-			self.button15, length = self:SetupButtonVertical("PortalMageButton15", self.button15, length, "oribos", start + 15, frame, PortalMage.icons["oribos"])
-		end
-		if portalMageSpells["valdrakken"] then
-			self.button16, length = self:SetupButtonVertical("PortalMageButton16", self.button16, length, "valdrakken", start + 16, frame, PortalMage.icons["valdrakken"])
-		end
-		if portalMageSpells["dornogal"] then
-			self.button17, length = self:SetupButtonVertical("PortalMageButton17", self.button17, length, "dornogal", start + 17, frame, PortalMage.icons["dornogal"])
+		for i = 1, table.getn(portalMageIndicesA), 1 do
+			index = portalMageIndicesA[i]
+			name = self:IsFactionSplit(index)
+			if portalMageSpells[index] then
+				self.buttons[i], length = self:SetupButtonVertical("PortalMageButton" .. i, self.buttons[i], length, name, start + 1, frame, PortalMage.icons[index])
+			end
 		end
 	else
-		if portalMageSpells["orgrimmar"] then
-			self.button1, length = self:SetupButtonVertical("PortalMageButton1", self.button1, length, "orgrimmar", start + 1, frame, PortalMage.icons["orgrimmar"])
-		end
-		if portalMageSpells["undercity"] then
-			self.button2, length = self:SetupButtonVertical("PortalMageButton2", self.button2, length, "undercity", start + 2, frame, PortalMage.icons["undercity"])
-		end
-		if portalMageSpells["thunderbluff"] then
-			self.button3, length = self:SetupButtonVertical("PortalMageButton3", self.button3, length, "thunderbluff", start + 3, frame, PortalMage.icons["thunderbluff"])
-		end
-		if portalMageSpells["silvermoon"] then
-			self.button4, length = self:SetupButtonVertical("PortalMageButton4", self.button4, length, "silvermoon", start + 4, frame, PortalMage.icons["silvermoon"])
-		end
-		if portalMageSpells["stonard"] then
-			self.button5, length = self:SetupButtonVertical("PortalMageButton5", self.button5, length, "stonard", start + 5, frame, PortalMage.icons["stonard"])
-		end
-		if portalMageSpells["dalaran"] then
-			self.button6, length = self:SetupButtonVertical("PortalMageButton6", self.button6, length, "dalaran", start + 6, frame, PortalMage.icons["dalaran"])
-		end
-		if portalMageSpells["shattrath"] then
-			self.button7, length = self:SetupButtonVertical("PortalMageButton7", self.button7, length, "shattrathH", start + 7, frame, PortalMage.icons["shattrath"])
-		end
-		if portalMageSpells["northrend"] then
-			self.button8, length = self:SetupButtonVertical("PortalMageButton8", self.button8, length, "northrend", start + 8, frame, PortalMage.icons["northrend"])
-		end
-		if portalMageSpells["tolbarad"] then
-			self.button9, length = self:SetupButtonVertical("PortalMageButton9", self.button9, length, "tolbaradH", start + 9, frame, PortalMage.icons["tolbarad"])
-		end
-		if portalMageSpells["pandaria"] then
-			self.button10, length = self:SetupButtonVertical("PortalMageButton10", self.button10, length, "pandariaH", start + 10, frame, PortalMage.icons["pandaria"])
-		end
-		if portalMageSpells["warspear"] then
-			self.button11, length = self:SetupButtonVertical("PortalMageButton11", self.button11, length, "warspear", start + 11, frame, PortalMage.icons["warspear"])
-		end
-		if portalMageSpells["brokenisles"] then
-			self.button12, length = self:SetupButtonVertical("PortalMageButton12", self.button12, length, "brokenisles", start + 12, frame, PortalMage.icons["brokenisles"])
-		end
-		if portalMageSpells["orderhall"] then
-			self.button13, length = self:SetupButtonVertical("PortalMageButton13", self.button13, length, "orderhall", start + 13, frame, PortalMage.icons["orderhall"])
-		end
-		if portalMageSpells["dazaralor"] then
-			self.button14, length = self:SetupButtonVertical("PortalMageButton13", self.button14, length, "dazaralor", start + 14, frame, PortalMage.icons["dazaralor"])
-		end
-		if portalMageSpells["oribos"] then
-			self.button15, length = self:SetupButtonVertical("PortalMageButton14", self.button15, length, "oribos", start + 15, frame, PortalMage.icons["oribos"])
-		end
-		if portalMageSpells["valdrakken"] then
-			self.button16, length = self:SetupButtonVertical("PortalMageButton16", self.button16, length, "valdrakken", start + 16, frame, PortalMage.icons["valdrakken"])
-		end
-		if portalMageSpells["dornogal"] then
-			self.button17, length = self:SetupButtonVertical("PortalMageButton17", self.button17, length, "dornogal", start + 17, frame, PortalMage.icons["dornogal"])
+		for i = 1, table.getn(portalMageIndicesH), 1 do
+			index = portalMageIndicesH[i]
+			name = self:IsFactionSplit(index)
+			if portalMageSpells[index] then
+				self.buttons[i], length = self:SetupButtonVertical("PortalMageButton" .. i, self.buttons[i], length, name, start + 1, frame, PortalMage.icons[index])
+			end
 		end
 	end
 	frame:SetWidth(44)
@@ -1123,109 +996,23 @@ end
 function PortalMage:SetupButtonsHorizontal(frame, move)
 	self:ClearButtons()
 	local length = 0
+	local index = "0"
+	local name = ""
 	if self.faction == "Alliance" then
-		if portalMageSpells["stormwind"] then
-			self.button1, length = self:SetupButtonHorizontal("PortalMageButton1", self.button1, length, "stormwind", start + 1, frame, PortalMage.icons["stormwind"])
-		end
-		if portalMageSpells["ironforge"] then
-			self.button2, length = self:SetupButtonHorizontal("PortalMageButton2", self.button2, length, "ironforge", start + 2, frame, PortalMage.icons["ironforge"])
-		end
-		if portalMageSpells["darnassus"] then
-			self.button3, length = self:SetupButtonHorizontal("PortalMageButton3", self.button3, length, "darnassus", start + 3, frame, PortalMage.icons["darnassus"])
-		end
-		if portalMageSpells["exodar"] then
-			self.button4, length = self:SetupButtonHorizontal("PortalMageButton4", self.button4, length, "exodar", start + 4, frame, PortalMage.icons["exodar"])
-		end
-		if portalMageSpells["theramore"] then
-			self.button5, length = self:SetupButtonHorizontal("PortalMageButton5", self.button5, length, "theramore", start + 5, frame, PortalMage.icons["theramore"])
-		end
-		if portalMageSpells["dalaran"] then
-			self.button6, length = self:SetupButtonHorizontal("PortalMageButton6", self.button6, length, "dalaran", start + 6, frame, PortalMage.icons["dalaran"])
-		end
-		if portalMageSpells["shattrath"] then
-			self.button7, length = self:SetupButtonHorizontal("PortalMageButton7", self.button7, length, "shattrathA", start + 7, frame, PortalMage.icons["shattrath"])
-		end
-		if portalMageSpells["northrend"] then
-			self.button8, length = self:SetupButtonHorizontal("PortalMageButton8", self.button8, length, "northrend", start + 8, frame, PortalMage.icons["northrend"])
-		end
-		if portalMageSpells["tolbarad"] then
-			self.button9, length = self:SetupButtonHorizontal("PortalMageButton9", self.button9, length, "tolbaradA", start + 9, frame, PortalMage.icons["tolbarad"])
-		end
-		if portalMageSpells["pandaria"] then
-			self.button10, length = self:SetupButtonHorizontal("PortalMageButton10", self.button10, length, "pandariaA", start + 10, frame, PortalMage.icons["pandaria"])
-		end
-		if portalMageSpells["stormshield"] then
-			self.button11, length = self:SetupButtonHorizontal("PortalMageButton11", self.button11, length, "stormshield", start + 11, frame, PortalMage.icons["stormshield"])
-		end
-		if portalMageSpells["brokenisles"] then
-			self.button12, length = self:SetupButtonHorizontal("PortalMageButton12", self.button12, length, "brokenisles", start + 12, frame, PortalMage.icons["brokenisles"])
-		end
-		if portalMageSpells["orderhall"] then
-			self.button13, length = self:SetupButtonHorizontal("PortalMageButton13", self.button13, length, "orderhall", start + 13, frame, PortalMage.icons["orderhall"])
-		end
-		if portalMageSpells["boralus"] then
-			self.button14, length = self:SetupButtonHorizontal("PortalMageButton13", self.button14, length, "boralus", start + 14, frame, PortalMage.icons["boralus"])
-		end
-		if portalMageSpells["oribos"] then
-			self.button15, length = self:SetupButtonHorizontal("PortalMageButton14", self.button15, length, "oribos", start + 15, frame, PortalMage.icons["oribos"])
-		end
-		if portalMageSpells["valdrakken"] then
-			self.button16, length = self:SetupButtonHorizontal("PortalMageButton16", self.button16, length, "valdrakken", start + 16, frame, PortalMage.icons["valdrakken"])
-		end
-		if portalMageSpells["dornogal"] then
-			self.button17, length = self:SetupButtonHorizontal("PortalMageButton17", self.button17, length, "dornogal", start + 17, frame, PortalMage.icons["dornogal"])
+		for i = 1, table.getn(portalMageIndicesA), 1 do
+			index = portalMageIndicesA[i]
+			name = self:IsFactionSplit(index)
+			if portalMageSpells[index] then
+				self.buttons[i], length = self:SetupButtonHorizontal("PortalMageButton" .. i, self.buttons[i], length, name, start + 1, frame, PortalMage.icons[index])
+			end
 		end
 	else
-		if portalMageSpells["orgrimmar"] then
-			self.button1, length = self:SetupButtonHorizontal("PortalMageButton1", self.button1, length, "orgrimmar", start + 1, frame, PortalMage.icons["orgrimmar"])
-		end
-		if portalMageSpells["undercity"] then
-			self.button2, length = self:SetupButtonHorizontal("PortalMageButton2", self.button2, length, "undercity", start + 2, frame, PortalMage.icons["undercity"])
-		end
-		if portalMageSpells["thunderbluff"] then
-			self.button3, length = self:SetupButtonHorizontal("PortalMageButton3", self.button3, length, "thunderbluff", start + 3, frame, PortalMage.icons["thunderbluff"])
-		end
-		if portalMageSpells["silvermoon"] then
-			self.button4, length = self:SetupButtonHorizontal("PortalMageButton4", self.button4, length, "silvermoon", start + 4, frame, PortalMage.icons["silvermoon"])
-		end
-		if portalMageSpells["stonard"] then
-			self.button5, length = self:SetupButtonHorizontal("PortalMageButton5", self.button5, length, "stonard", start + 5, frame, PortalMage.icons["stonard"])
-		end
-		if portalMageSpells["dalaran"] then
-			self.button6, length = self:SetupButtonHorizontal("PortalMageButton6", self.button6, length, "dalaran", start + 6, frame, PortalMage.icons["dalaran"])
-		end
-		if portalMageSpells["shattrath"] then
-			self.button7, length = self:SetupButtonHorizontal("PortalMageButton7", self.button7, length, "shattrathH", start + 7, frame, PortalMage.icons["shattrath"])
-		end
-		if portalMageSpells["northrend"] then
-			self.button8, length = self:SetupButtonHorizontal("PortalMageButton8", self.button8, length, "northrend", start + 8, frame, PortalMage.icons["northrend"])
-		end
-		if portalMageSpells["tolbarad"] then
-			self.button9, length = self:SetupButtonHorizontal("PortalMageButton9", self.button9, length, "tolbaradH", start + 9, frame, PortalMage.icons["tolbarad"])
-		end
-		if portalMageSpells["pandaria"] then
-			self.button10, length = self:SetupButtonHorizontal("PortalMageButton10", self.button10, length, "pandariaH", start + 10, frame, PortalMage.icons["pandaria"])
-		end
-		if portalMageSpells["warspear"] then
-			self.button11, length = self:SetupButtonHorizontal("PortalMageButton11", self.button11, length, "warspear", start + 11, frame, PortalMage.icons["warspear"])
-		end
-		if portalMageSpells["brokenisles"] then
-			self.button12, length = self:SetupButtonHorizontal("PortalMageButton12", self.button12, length, "brokenisles", start + 12, frame, PortalMage.icons["brokenisles"])
-		end
-		if portalMageSpells["orderhall"] then
-			self.button13, length = self:SetupButtonHorizontal("PortalMageButton13", self.button13, length, "orderhall", start + 13, frame, PortalMage.icons["orderhall"])
-		end
-		if portalMageSpells["dazaralor"] then
-			self.button14, length = self:SetupButtonHorizontal("PortalMageButton13", self.button14, length, "dazaralor", start + 14, frame, PortalMage.icons["dazaralor"])
-		end
-		if portalMageSpells["oribos"] then
-			self.button15, length = self:SetupButtonHorizontal("PortalMageButton14", self.button15, length, "oribos", start + 15, frame, PortalMage.icons["oribos"])
-		end
-		if portalMageSpells["valdrakken"] then
-			self.button16, length = self:SetupButtonHorizontal("PortalMageButton16", self.button16, length, "valdrakken", start + 16, frame, PortalMage.icons["valdrakken"])
-		end
-		if portalMageSpells["dornogal"] then
-			self.button17, length = self:SetupButtonHorizontal("PortalMageButton17", self.button17, length, "dornogal", start + 17, frame, PortalMage.icons["dornogal"])
+		for i = 1, table.getn(portalMageIndicesH), 1 do
+			index = portalMageIndicesH[i]
+			name = self:IsFactionSplit(index)
+			if portalMageSpells[index] then
+				self.buttons[i], length = self:SetupButtonHorizontal("PortalMageButton" .. i, self.buttons[i], length, name, start + 1, frame, PortalMage.icons[index])
+			end
 		end
 	end
 	frame:SetWidth(length)
@@ -1255,6 +1042,7 @@ function PortalMage:SetupButtonHorizontal(name, button, x, index, id, frame, ico
 	button:SetWidth(44)
 	button:SetHeight(44)
 	button:SetPoint("TOPLEFT", x, 0)
+	print(index)
 	self:SetupButton(button, index, id, icon)
 	return button, x + 44
 end
@@ -1345,23 +1133,9 @@ function PortalMage:SetTooltipText(button1, button2, spell1, spell2)
 end
 
 function PortalMage:ClearButtons()
-	self:ClearButton(self.button1, start + 1)
-	self:ClearButton(self.button2, start + 2)
-	self:ClearButton(self.button3, start + 3)
-	self:ClearButton(self.button4, start + 4)
-	self:ClearButton(self.button5, start + 5)
-	self:ClearButton(self.button6, start + 6)
-	self:ClearButton(self.button7, start + 7)
-	self:ClearButton(self.button8, start + 8)
-	self:ClearButton(self.button9, start + 9)
-	self:ClearButton(self.button10, start + 10)
-	self:ClearButton(self.button11, start + 11)
-	self:ClearButton(self.button12, start + 12)
-	self:ClearButton(self.button13, start + 13)
-	self:ClearButton(self.button14, start + 14)
-	self:ClearButton(self.button15, start + 15)
-	self:ClearButton(self.button16, start + 16)
-	self:ClearButton(self.button17, start + 17)
+	for i = 1, table.getn(portalMageIndicesA), 1 do
+		self:ClearButton(self.buttons[i], start + i)
+	end
 end
 
 function PortalMage:ClearButton(button, id)
