@@ -959,7 +959,11 @@ end
 
 function PortalMage:IsFactionSplit(index)
 	if index == "shattrath" or index == "tolbarad" or index == "pandaria" then
-		return index .. "A"
+		if self.faction == "Alliance" then
+			return index .. "A"
+		else
+			return index .. "H"
+		end
 	end
 	return index
 end
@@ -1042,7 +1046,6 @@ function PortalMage:SetupButtonHorizontal(name, button, x, index, id, frame, ico
 	button:SetWidth(44)
 	button:SetHeight(44)
 	button:SetPoint("TOPLEFT", x, 0)
-	print(index)
 	self:SetupButton(button, index, id, icon)
 	return button, x + 44
 end
