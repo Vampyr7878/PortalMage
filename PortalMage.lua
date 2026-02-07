@@ -901,7 +901,11 @@ end
 
 function PortalMage:IsFactionSplit(index)
 	if index == "shattrath" or index == "tolbarad" or index == "pandaria" then
-		return index .. "A"
+		if self.faction == "Alliance" then
+			return index .. "A"
+		else
+			return index .. "H"
+		end
 	end
 	return index
 end
