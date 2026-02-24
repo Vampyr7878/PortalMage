@@ -183,6 +183,9 @@ function PortalMage:OnInitialize()
 		if portalMageData.Opacity == nil then
 			portalMageData.Opacity = 1
 		end
+		if portalMageData.Hide == nil then
+			portalMageData.Hide = false
+		end
 		if portalMageData.Mouseover == nil then
 			portalMageData.Mouseover = false
 		end
@@ -254,6 +257,14 @@ function PortalMage:OnInitialize()
 								max = 1,
 								set = "SetOpacity",
 								get = "GetOpacity"
+							},
+							hide = {
+								name = L["Always hide"],
+								type = "toggle",
+								width = "full",
+								desc = L["when enabled bar will never be visible"],
+								set = "SetHide",
+								get = "GetHide"
 							},
 							mouseover = {
 								name = L["Show only on mouse over"],
@@ -491,6 +502,14 @@ function PortalMage:OnInitialize()
 								max = 1,
 								set = "SetOpacity",
 								get = "GetOpacity"
+							},
+							hide = {
+								name = L["Always hide"],
+								type = "toggle",
+								width = "full",
+								desc = L["when enabled bar will never be visible"],
+								set = "SetHide",
+								get = "GetHide"
 							},
 							mouseover = {
 								name = L["Show only on mouse over"],
@@ -744,6 +763,19 @@ function PortalMage:GetOpacity(info)
 	return portalMageData.Opacity
 end
 
+function PortalMage:SetHide(info, val)
+	portalMageData.Hide = val
+	if portalMageData.Hide then
+		self.frame:Hide()
+	else
+		self.frame:Show()
+	end
+end
+
+function PortalMage:GetHide(info)
+	return portalMageData.Hide
+end
+
 function PortalMage:SetMouseover(info, val)
 	portalMageData.Mouseover = val
 	if portalMageData.Mouseover then
@@ -935,6 +967,11 @@ function PortalMage:SetupFrame(frame)
 		frame:SetAlpha(0)
 	else
 		frame:SetAlpha(portalMageData.Opacity)
+	end
+	if portalMageData.Hide then
+		frame:Hide()
+	else
+		frame:Show()
 	end
 end
 
