@@ -1,4 +1,4 @@
-## Interface: 50500
+## Interface: 50504
 ## Title: Portal Mage
 ## Title-koKR: 포탈 매직-Portal Mage
 ## Notes: Bar with portals and teleports.
