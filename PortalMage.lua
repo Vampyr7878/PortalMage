@@ -558,7 +558,7 @@ function PortalMage.frameOnEvent(self, event, spell)
 			group:ReSkin()
 		end
 		self:UnregisterEvent("PLAYER_LOGIN")
-	elseif event == "LEARNED_SPELL_IN_TAB" and PortalMage:NewSpell(spell) then
+	elseif event == "LEARNED_SPELL_IN_SKILL_LINE" and PortalMage:NewSpell(spell) then
 		self:SetHeight(40)
 		PortalMage.move:SetHeight(40);
 		if portalMageData.Vertical then
@@ -619,7 +619,7 @@ function PortalMage:SetupFrame(frame)
 	frame:SetScale(0.8 * portalMageData.Scale)
 	frame:SetFrameStrata("LOW")
 	frame:RegisterEvent("PLAYER_LOGIN")
-	frame:RegisterEvent("LEARNED_SPELL_IN_TAB")
+	frame:RegisterEvent("LEARNED_SPELL_IN_SKILL_LINE")
 	frame:RegisterEvent("BAG_UPDATE")
 	frame:SetScript("OnEvent", PortalMage.frameOnEvent)
 	frame.teleports = frame:CreateFontString(nil, "OVERLAY", "GameFontWhite")
