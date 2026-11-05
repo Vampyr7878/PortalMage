@@ -3,154 +3,44 @@ local L = LibStub("AceLocale-3.0"):GetLocale("PortalMage")
 local group = {}
 local Masque
 local start = 180
+local teleportRunes
+local portalRunes
 
 portalMageIndicesA = {"stormwind",
 					  "ironforge",
-					  "darnassus",
-					  "exodar",
-					  "theramore",
-					  "dalaran",
-					  "shattrath",
-					  "northrend",
-					  "tolbarad",
-					  "pandaria",
-					  "stormshield",
-					  "brokenisles",
-					  "orderhall",
-					  "boralus",
-					  "oribos",
-					  "valdrakken",
-					  "dornogal",
-					  "quelthalas"}
+					  "darnassus"}
 
 portalMageIndicesH = {"orgrimmar",
 					  "undercity",
-					  "thunderbluff",
-					  "silvermoon",
-					  "stonard",
-					  "dalaran",
-					  "shattrath",
-					  "northrend",
-					  "tolbarad",
-					  "pandaria",
-					  "warspear",
-					  "brokenisles",
-					  "orderhall",
-					  "dazaralor",
-					  "oribos",
-					  "valdrakken",
-					  "dornogal",
-					  "quelthalas"}
+					  "thunderbluff"}
 
 portalMageSpells = {["stormwind"] = true,
 					["orgrimmar"] = true,
 					["ironforge"] = true,
 					["undercity"] = true,
 					["darnassus"] = true,
-					["thunderbluff"] = true,
-					["exodar"] = true,
-					["silvermoon"] = true,
-					["theramore"] = true,
-					["stonard"] = true,
-					["dalaran"] = true,
-					["shattrath"] = true,
-					["northrend"] = true,
-					["tolbarad"] = true,
-					["pandaria"] = true,
-					["stormshield"] = true,
-					["warspear"] = true,
-					["brokenisles"] = true,
-					["orderhall"] = true,
-					["boralus"] = true,
-					["dazaralor"] = true,
-					["oribos"] = true,
-					["valdrakken"] = true,
-					["dornogal"] = true,
-					["quelthalas"] = true}
+					["thunderbluff"] = true}
 
 PortalMage.portals = {["stormwind"] = 10059,
 					  ["orgrimmar"] = 11417,
 					  ["ironforge"] = 11416,
 					  ["undercity"] = 11418,
 					  ["darnassus"] = 11419,
-					  ["thunderbluff"] = 11420,
-					  ["exodar"] = 32266,
-					  ["silvermoon"] = 32267,
-					  ["theramore"] = 49360,
-					  ["stonard"] = 49361,
-					  ["dalaran"] = 120146,
-					  ["shattrathA"] = 33691,
-					  ["shattrathH"] = 35717,
-					  ["northrend"] = 53142,
-					  ["tolbaradA"] = 88345,
-					  ["tolbaradH"] = 88346,
-					  ["pandariaA"] = 132620,
-					  ["pandariaH"] = 132626,
-					  ["stormshield"] = 176246,
-					  ["warspear"] = 176244,
-					  ["brokenisles"] = 224871,
-					  ["orderhall"] = 193759,
-					  ["boralus"] = 281400,
-					  ["dazaralor"] = 281402,
-					  ["oribos"] = 344597,
-					  ["valdrakken"] = 395289,
-					  ["dornogal"] = 446534,
-					  ["quelthalas"] = 1259194}
+					  ["thunderbluff"] = 11420}
 
 PortalMage.teleports = {["stormwind"] = 3561,
 						["orgrimmar"] = 3567,
 						["ironforge"] = 3562,
 						["undercity"] = 3563,
 						["darnassus"] = 3565,
-						["thunderbluff"] = 3566,
-						["exodar"] = 32271,
-						["silvermoon"] = 32272,
-						["theramore"] = 49359,
-						["stonard"] = 49358,
-						["dalaran"] = 120145,
-						["shattrathA"] = 33690,
-						["shattrathH"] = 35715,
-						["northrend"] = 53140,
-						["tolbaradA"] = 88342,
-						["tolbaradH"] = 88344,
-						["pandariaA"] = 132621,
-						["pandariaH"] = 132627,
-						["stormshield"] = 176248,
-						["warspear"] = 176242,
-						["brokenisles"] = 224869,
-						["orderhall"] = 193759,
-						["boralus"] = 281403,
-						["dazaralor"] = 281404,
-						["oribos"] = 344587,
-						["valdrakken"] = 395277,
-						["dornogal"] = 446540,
-						["quelthalas"] = 1259190}
+						["thunderbluff"] = 3566}
 
 PortalMage.icons = {["stormwind"] = "Interface/ICONS/Spell_Arcane_TeleportStormwind",
 					["orgrimmar"] = "Interface/ICONS/Spell_Arcane_TeleportOrgrimmar",
 					["ironforge"] = "Interface/ICONS/Spell_Arcane_TeleportIronforge",
 					["undercity"] = "Interface/ICONS/Spell_Arcane_TeleportUndercity",
 					["darnassus"] = "Interface/ICONS/Spell_Arcane_TeleportDarnassus",
-					["thunderbluff"] = "Interface/ICONS/Spell_Arcane_TeleportThunderBluff",
-					["exodar"] = "Interface/ICONS/Spell_Arcane_TeleportExodar",
-					["silvermoon"] = "Interface/ICONS/Spell_Arcane_TeleportSilvermoon",
-					["theramore"] = "Interface/ICONS/Spell_Arcane_TeleportTheramore",
-					["stonard"] = "Interface/ICONS/Spell_Arcane_TeleportStonard",
-					["dalaran"] = "Interface/ICONS/Spell_Arcane_TeleportDalaranCrater",
-					["shattrath"] = "Interface/ICONS/Spell_Arcane_TeleportShattrath",
-					["northrend"] = "Interface/ICONS/Spell_Arcane_TeleportDalaran",
-					["tolbarad"] = "Interface/ICONS/Spell_Arcane_TeleportTolBarad",
-					["pandaria"] = "Interface/ICONS/Spell_Arcane_ValeOfBlossoms",
-					["stormshield"] = "Interface/ICONS/Spell_Arcane_TeleportStormshield",
-					["warspear"] = "Interface/ICONS/Spell_Arcane_TeleportWarspear",
-					["brokenisles"] = "Interface/ICONS/Spell_Arcane_TeleportDalaranBrokenIsles",
-					["orderhall"] = "Interface/ICONS/Spell_Arcane_TeleportHallOfTheGuardian",
-					["boralus"] = "Interface/ICONS/Spell_Arcane_PortalKulTiras",
-					["dazaralor"] = "Interface/ICONS/Spell_Arcane_PortalZandalar",
-					["oribos"] = "Interface/ICONS/Spell_Arcane_TeleportOribos",
-					["valdrakken"] = "Interface/ICONS/Spell_Arcane_TeleportValdrakken",
-					["dornogal"] = "Interface/ICONS/Inv_Spell_Arcane_TelepotDornogal",
-					["quelthalas"] = "Interface/ICONS/Inv_12_Mage_Teleport"}
+					["thunderbluff"] = "Interface/ICONS/Spell_Arcane_TeleportThunderBluff"}
 
 function PortalMage:OnInitialize()
 	_, self.class = UnitClass("player")
@@ -177,6 +67,19 @@ function PortalMage:OnInitialize()
 		if portalMageData.Scale == nil then
 			portalMageData.Scale = 1
 		end
+		if portalMageData.Runes == nil then
+			portalMageData.Runes = {}
+		end
+		if portalMageData.Runes.Portal == nil then
+			portalMageData.Runes.Portal = {}
+			portalMageData.Runes.Portal.show = true
+			portalMageData.Runes.Portal.position = "TOPLEFT"
+		end
+		if portalMageData.Runes.Teleport == nil then
+			portalMageData.Runes.Teleport = {}
+			portalMageData.Runes.Teleport.show = true
+			portalMageData.Runes.Teleport.position = "TOPRIGHT"
+		end
 		if portalMageData.Invert == nil then
 			portalMageData.Invert = false
 		end
@@ -201,6 +104,8 @@ function PortalMage:OnInitialize()
 		if portalMageData.TeleportAnnouncement == nil then
 			portalMageData.TeleportAnnouncement = "Casting %s!"
 		end
+		teleportRunes = self:CountItems(17031)
+		portalRunes = self:CountItems(17032)
 		self:SetupFrame(self.frame)
 		self:SetupMoveFrame(self.move)
 		if self.faction == "Alliance" then
@@ -239,6 +144,48 @@ function PortalMage:OnInitialize()
 								max = 2,
 								set = "SetScale",
 								get = "GetScale"
+							},
+							portalRune = {
+								name = "Rune of Portals",
+								type = "group",
+								args ={
+									enable = {
+										name = "Enable",
+										type = "toggle",
+										desc = "enable Rune of Portals display near the bar",
+										set = "SetPortalRuneEnable",
+										get = "GetPortalRuneEnable"
+									},
+									position = {
+										name = "Position",
+										type = "select",
+										values = {["TOPLEFT"] = L["Top Left"], ["BOTTOMLEFT"] = L["Bottom Left"], ["TOPRIGHT"] = L["Top Right"], ["BOTTOMRIGHT"] = L["Bottom Right"]},
+										style = "dropdown",
+										set = "SetPortalRunePosition",
+										get = "GetPortalRunePosition"
+									}
+								}
+							},
+							teleportRune = {
+								name = "Rune of Teleportaion",
+								type = "group",
+								args ={
+									enable = {
+										name = "Enable",
+										type = "toggle",
+										desc = "enable Rune of Teleportaion display near the bar",
+										set = "SetTeleportRuneEnable",
+										get = "GetTeleportRuneEnable"
+									},
+									position = {
+										name = "Position",
+										type = "select",
+										values = {["TOPLEFT"] = L["Top Left"], ["BOTTOMLEFT"] = L["Bottom Left"], ["TOPRIGHT"] = L["Top Right"], ["BOTTOMRIGHT"] = L["Bottom Right"]},
+										style = "dropdown",
+										set = "SetTeleportRunePosition",
+										get = "GetTeleportRunePosition"
+									}
+								}
 							},
 							invert = {
 								name = L["Invert mouse buttons"],
@@ -336,111 +283,6 @@ function PortalMage:OnInitialize()
 								desc = L["toggles portal and teleport to Darnassus"],
 								set = "Set",
 								get = "Get"
-							},
-							exodar = {
-								name = L["Exodar"],
-								type = "toggle",
-								desc = L["toggles portal and teleport to Exodar"],
-								set = "Set",
-								get = "Get"
-							},
-							theramore = {
-								name = L["Theramore"],
-								type = "toggle",
-								desc = L["toggles portal and teleport to Theramore"],
-								set = "Set",
-								get = "Get"
-							},
-							dalaran = {
-								name = L["Dalaran Crater"],
-								type = "toggle",
-								desc = L["toggles portal and teleport to Dalaran Crater"],
-								set = "Set",
-								get = "Get"
-							},
-							shattrath = {
-								name = L["Shattrath"],
-								type = "toggle",
-								desc = L["toggles portal and teleport to Shattrath"],
-								set = "Set",
-								get = "Get"
-							},
-							northrend = {
-								name = L["Dalaran on Northrend"],
-								type = "toggle",
-								desc = L["toggles portal and teleport to Dalaran on Northrend"],
-								set = "Set",
-								get = "Get"
-							},
-							tolbarad = {
-								name = L["Tol Barad"],
-								type = "toggle",
-								desc = L["toggles portal and teleport to Tol Barad"],
-								set = "Set",
-								get = "Get"
-							},
-							pandaria = {
-								name = L["Vale of Eternal Blossoms"],
-								type = "toggle",
-								desc = L["toggles portal and teleport to Vale of Eternal Blossoms"],
-								set = "Set",
-								get = "Get"
-							},
-							stormshield = {
-								name = L["Stormshield"],
-								type = "toggle",
-								desc = L["toggles portal and teleport to Stormshield"],
-								set = "Set",
-								get = "Get"
-							},
-							brokenisles = {
-								name = L["Dalaran on Broken Isles"],
-								type = "toggle",
-								desc = L["toggles portal and teleport to Dalaran on Broken Isles"],
-								set = "Set",
-								get = "Get"
-							},
-							orderhall = {
-								name = L["Hall of the Guardian"],
-								type = "toggle",
-								desc = L["toggles teleport to Hall of the Guardian(Mage Order Hall)"],
-								set = "Set",
-								get = "Get"
-							},
-							boralus = {
-								name = L["Boralus"],
-								type = "toggle",
-								desc = L["toggles portal and teleport to Boralus"],
-								set = "Set",
-								get = "Get"
-							},
-							oribos = {
-								name = L["Oribos"],
-								type = "toggle",
-								desc = L["toggles portal and teleport to Oribos"],
-								set = "Set",
-								get = "Get"
-							},
-							valdrakken = {
-								name = L["Valdrakken"],
-								type = "toggle",
-								desc = L["toggles portal and teleport to Valdrakken"],
-								set = "Set",
-								get = "Get"
-							},
-							dornogal = {
-								name = L["Dornogal"],
-								type = "toggle",
-								desc = L["toggles portal and teleport to Dornogal"],
-								set = "Set",
-								get = "Get"
-							},
-							quelthalas = {
-								name = L["Midnight Silvermoon"],
-								type = "toggle",
-								desc = L["toggles portal and teleport to Midnight version of Silvermoon"],
-								set = "Set",
-								get = "Get"
 							}
 						}
 					}
@@ -484,6 +326,48 @@ function PortalMage:OnInitialize()
 								max = 2,
 								set = "SetScale",
 								get = "GetScale"
+							},
+							portalRune = {
+								name = "Rune of Portals",
+								type = "group",
+								args ={
+									enable = {
+										name = "Enable",
+										type = "toggle",
+										desc = "enable Rune of Portals display near the bar",
+										set = "SetPortalRuneEnable",
+										get = "GetPortalRuneEnable"
+									},
+									position = {
+										name = "Position",
+										type = "select",
+										values = {["TOPLEFT"] = L["Top Left"], ["BOTTOMLEFT"] = L["Bottom Left"], ["TOPRIGHT"] = L["Top Right"], ["BOTTOMRIGHT"] = L["Bottom Right"]},
+										style = "dropdown",
+										set = "SetPortalRunePosition",
+										get = "GetPortalRunePosition"
+									}
+								}
+							},
+							teleportRune = {
+								name = "Rune of Teleportaion",
+								type = "group",
+								args ={
+									enable = {
+										name = "Enable",
+										type = "toggle",
+										desc = "enable Rune of Teleportaion display near the bar",
+										set = "SetTeleportRuneEnable",
+										get = "GetTeleportRuneEnable"
+									},
+									position = {
+										name = "Position",
+										type = "select",
+										values = {["TOPLEFT"] = L["Top Left"], ["BOTTOMLEFT"] = L["Bottom Left"], ["TOPRIGHT"] = L["Top Right"], ["BOTTOMRIGHT"] = L["Bottom Right"]},
+										style = "dropdown",
+										set = "SetTeleportRunePosition",
+										get = "GetTeleportRunePosition"
+									}
+								}
 							},
 							invert = {
 								name = L["Invert mouse buttons"],
@@ -581,111 +465,6 @@ function PortalMage:OnInitialize()
 								desc = L["toggles portal and teleport to Thunder Bluff"],
 								set = "Set",
 								get = "Get"
-							},
-							silvermoon = {
-								name = L["Silvermoon"],
-								type = "toggle",
-								desc = L["toggles portal and teleport to Silvermoon"],
-								set = "Set",
-								get = "Get"
-							},
-							stonard = {
-								name = L["Stonard"],
-								type = "toggle",
-								desc = L["toggles portal and teleport to Stonard"],
-								set = "Set",
-								get = "Get"
-							},
-							dalaran = {
-								name = L["Dalaran Crater"],
-								type = "toggle",
-								desc = L["toggles portal and teleport to Dalaran Crater"],
-								set = "Set",
-								get = "Get"
-							},
-							shattrath = {
-								name = L["Shattrath"],
-								type = "toggle",
-								desc = L["toggles portal and teleport to Shattrath"],
-								set = "Set",
-								get = "Get"
-							},
-							northrend = {
-								name = L["Dalaran on Northrend"],
-								type = "toggle",
-								desc = L["toggles portal and teleport to Dalaran on Northrend"],
-								set = "Set",
-								get = "Get"
-							},
-							tolbarad = {
-								name = L["Tol Barad"],
-								type = "toggle",
-								desc = L["toggles portal and teleport to Tol Barad"],
-								set = "Set",
-								get = "Get"
-							},
-							pandaria = {
-								name = L["Vale of Eternal Blossoms"],
-								type = "toggle",
-								desc = L["toggles portal and teleport to Vale of Eternal Blossoms"],
-								set = "Set",
-								get = "Get"
-							},
-							warspear = {
-								name = L["Warspear"],
-								type = "toggle",
-								desc = L["toggles portal and teleport to Warspear"],
-								set = "Set",
-								get = "Get"
-							},
-							brokenisles = {
-								name = L["Dalaran on Broken Isles"],
-								type = "toggle",
-								desc = L["toggles portal and teleport to Dalaran on Broken Isles"],
-								set = "Set",
-								get = "Get"
-							},
-							orderhall = {
-								name = L["Hall of the Guardian"],
-								type = "toggle",
-								desc = L["toggles teleport to Hall of the Guardian(Mage Order Hall)"],
-								set = "Set",
-								get = "Get"
-							},
-							dazaralor = {
-								name = L["Dazar'alor"],
-								type = "toggle",
-								desc = L["toggles portal and teleport to Dazar'alor"],
-								set = "Set",
-								get = "Get"
-							},
-							oribos = {
-								name = L["Oribos"],
-								type = "toggle",
-								desc = L["toggles portal and teleport to Oribos"],
-								set = "Set",
-								get = "Get"
-							},
-							valdrakken = {
-								name = L["Valdrakken"],
-								type = "toggle",
-								desc = L["toggles portal and teleport to Valdrakken"],
-								set = "Set",
-								get = "Get"
-							},
-							dornogal = {
-								name = L["Dornogal"],
-								type = "toggle",
-								desc = L["toggles portal and teleport to Dornogal"],
-								set = "Set",
-								get = "Get"
-							},
-							quelthalas = {
-								name = L["Midnight Silvermoon"],
-								type = "toggle",
-								desc = L["toggles portal and teleport to Midnight version of Silvermoon"],
-								set = "Set",
-								get = "Get"
 							}
 						}
 					}
@@ -735,6 +514,58 @@ end
 
 function PortalMage:GetScale(info)
 	return portalMageData.Scale
+end
+
+function PortalMage:SetPortalRuneEnable(info, val)
+	portalMageData.Runes.Portal.show = val
+	if portalMageData.Runes.Portal.show then
+		self.frame.portals:Show()
+	else
+		self.frame.portals:Hide()
+	end
+end
+
+function PortalMage:GetPortalRuneEnable(info)
+	return portalMageData.Runes.Portal.show
+end
+
+function PortalMage:SetPortalRunePosition(info, val)
+	portalMageData.Runes.Portal.position = val
+	if portalMageData.Vertical then
+		self:SetupButtonsVertical(self.frame, self.move)
+	else
+		self:SetupButtonsHorizontal(self.frame, self.move)
+	end
+end
+
+function PortalMage:GetPortalRunePosition(info)
+	return portalMageData.Runes.Portal.position
+end
+
+function PortalMage:SetTeleportRuneEnable(info, val)
+	portalMageData.Runes.Teleport.show = val
+	if portalMageData.Runes.Teleport.show then
+		self.frame.teleports:Show()
+	else
+		self.frame.teleports:Hide()
+	end
+end
+
+function PortalMage:GetTeleportRuneEnable(info)
+	return portalMageData.Runes.Teleport.show
+end
+
+function PortalMage:SetTeleportRunePosition(info, val)
+	portalMageData.Runes.Teleport.position = val
+	if portalMageData.Vertical then
+		self:SetupButtonsVertical(self.frame, self.move)
+	else
+		self:SetupButtonsHorizontal(self.frame, self.move)
+	end
+end
+
+function PortalMage:GetTeleportRunePosition(info)
+	return portalMageData.Runes.Teleport.position
 end
 
 function PortalMage:SetInvert(info, val)
@@ -900,6 +731,12 @@ function PortalMage.frameOnEvent(self, event, arg1, _, arg3)
 				SendChatMessage(msg, IsInGroup(LE_PARTY_CATEGORY_INSTANCE) and "INSTANCE_CHAT" or IsInRaid() and "RAID" or "PARTY")
 			end
 		end
+	elseif event == "BAG_UPDATE" then
+		teleportRunes = PortalMage:CountItems(17031)
+		portalRunes = PortalMage:CountItems(17032)
+		self.teleports:SetText(teleportRunes)
+		self.portals:SetText(portalRunes)
+		AdjustReagentDisplay(self)
 	end
 end
 
@@ -963,6 +800,22 @@ function PortalMage:SetupFrame(frame)
 	frame:RegisterEvent("LEARNED_SPELL_IN_SKILL_LINE")
 	frame:RegisterEvent("UNIT_SPELLCAST_START")
 	frame:SetScript("OnEvent", PortalMage.frameOnEvent)
+	frame.teleports = frame:CreateFontString(nil, "OVERLAY", "GameFontWhite")
+	frame.teleports:SetTextColor(1, 1, 0)
+	frame.teleports:SetText(teleportRunes)
+	frame.portals = frame:CreateFontString(nil, "OVERLAY", "GameFontWhite")
+	frame.portals:SetTextColor(0, 1, 0)
+	frame.portals:SetText(portalRunes)
+	if portalMageData.Runes.Portal.show then
+		self.frame.portals:Show()
+	else
+		self.frame.portals:Hide()
+	end
+	if portalMageData.Runes.Teleport.show then
+		self.frame.teleports:Show()
+	else
+		self.frame.teleports:Hide()
+	end
 	if portalMageData.Mouseover then
 		frame:SetAlpha(0)
 	else
@@ -992,6 +845,21 @@ function PortalMage:SetupMoveFrame(frame)
 	frame:SetScript("OnDragStart", PortalMage.frameOnDragStart)
 	frame:SetScript("OnDragStop", PortalMage.frameOnDragStop)
 	frame:Hide()
+end
+
+function PortalMage:CountItems(item)
+	local count = 0
+	for bag = 0 ,NUM_BAG_SLOTS do
+		for slot = 1, C_Container.GetContainerNumSlots(bag) do
+			if item == C_Container.GetContainerItemID(bag, slot) then
+				local info = C_Container.GetContainerItemInfo(bag, slot)
+				if info then
+					count = count + info.stackCount
+				end
+			end
+		end
+	end
+	return count
 end
 
 function PortalMage:IsFactionSplit(index)
@@ -1031,6 +899,7 @@ function PortalMage:SetupButtonsVertical(frame, move)
 	move:SetWidth(44)
 	frame:SetHeight(-length)
 	move:SetHeight(-length)
+	AdjustReagentDisplay(frame)
 	collectgarbage("collect")
 end
 
@@ -1060,6 +929,7 @@ function PortalMage:SetupButtonsHorizontal(frame, move)
 	move:SetWidth(length)
 	frame:SetHeight(44)
 	move:SetHeight(44)
+	AdjustReagentDisplay(frame)
 	collectgarbage("collect")
 end
 
@@ -1125,6 +995,31 @@ function PortalMage:SetupButton(button, index, id, icon)
 								 right = 2,
 								 top = 2,
 								 bottom = 2}})
+end
+
+function AdjustReagentDisplay(frame)
+	frame.portals:ClearAllPoints()
+	frame.teleports:ClearAllPoints()
+	local offset = 15
+	if portalRunes > 99 then
+		offset = offset + 17
+	elseif portalRunes > 9 then
+		offset = offset + 7
+	end
+	if string.find(portalMageData.Runes.Portal.position, "LEFT") then
+		offset = -offset
+	end
+	frame.portals:SetPoint(portalMageData.Runes.Portal.position, offset, 0)
+	offset = 15
+	if teleportRunes > 99 then
+		offset = offset + 17
+	elseif teleportRunes > 9 then
+		offset = offset + 7
+	end
+	if string.find(portalMageData.Runes.Teleport.position, "LEFT") then
+		offset = -offset
+	end
+	frame.teleports:SetPoint(portalMageData.Runes.Teleport.position, offset, 0)
 end
 
 function PortalMage:SetTooltipText(button1, button2, spell1, spell2)
