@@ -4,7 +4,7 @@
 ## Notes: Bar with portals and teleports.
 ## Notes-koKR: 포털과 텔레포트가 있는 바.
 ## Author: Vampyr78
-## Version: 4.0.3forver
+## Version: 4.0.4forver
 ## SavedVariablesPerCharacter: portalMageData, portalMageSpells
 ## IconTexture: Interface\Icons\spell_arcane_teleportshattrath.blp
 ## Category-enUS: Action Bars

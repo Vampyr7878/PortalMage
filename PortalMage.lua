@@ -2,7 +2,7 @@ local PortalMage = LibStub("AceAddon-3.0"):NewAddon("PortalMage")
 local L = LibStub("AceLocale-3.0"):GetLocale("PortalMage")
 local group = {}
 local Masque
-local start = 180
+local start = 220
 local teleportRunes
 local portalRunes
 
